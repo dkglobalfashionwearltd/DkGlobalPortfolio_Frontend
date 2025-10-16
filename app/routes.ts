@@ -7,5 +7,6 @@ export default [
     route("about-us", "routes/about-us.tsx"),
     route("blogs", "routes/blogs.tsx"),
     route("blogs/:id", "routes/detailBlog.tsx"),
+    route("reports/rsc-audit-reports", "routes/reports/rsc-reports.tsx"),
   ]),
 ] satisfies RouteConfig;

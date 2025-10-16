@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { isRouteErrorResponse, useParams } from "react-router";
 import BlogSummary from "~/components/app-components/BlogSummary";
-import Client from "~/components/app-components/clients";
 import ErrorPage from "~/components/app-components/ErrorPage";
-import PdfFlipBook from "~/components/app-components/PdfFlipBook";
-import PDFViewer from "~/components/app-components/PdfFlipBook";
-import PdfFlipBookClient from "~/components/app-components/PdfFlipBook";
 import ServiceSummary from "~/components/app-components/ServiceSummary";
 import TeamSummary from "~/components/app-components/TeamSummary";
 import WorkSummary from "~/components/app-components/WorkSummary";
@@ -39,9 +35,6 @@ const Home = () => {
       {/* client section */}
       <div>
         <ClientSlider />
-      </div>
-      <div>
-        {/* <PdfFlipBook fileUrl="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" /> */}
       </div>
     </div>
   );

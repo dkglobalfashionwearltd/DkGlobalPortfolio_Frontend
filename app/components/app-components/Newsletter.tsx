@@ -9,7 +9,7 @@ export default function NewsLetter() {
             <h2 className="text-4xl font-semibold tracking-tight text-white">
               Subscribe to our newsletter
             </h2>
-            <p className="mt-4 text-lg text-gray-400">
+            <p className="mt-4 text-lg text-gray-400 leading-relaxed text-justify whitespace-pre-line">
               Join thousands of readers who receive the latest industry
               insights, helpful resources, and exclusive updates delivered
               straight to their inbox.
@@ -47,7 +47,7 @@ export default function NewsLetter() {
               <dt className="mt-4 text-base font-semibold text-white">
                 Weekly articles
               </dt>
-              <dd className="mt-2 text-base/7 text-gray-400">
+              <dd className="mt-2 text-base/7 text-gray-400 leading-relaxed text-justify whitespace-pre-line">
                 Get fresh content every week, including expert tips, case
                 studies, and industry news to help you stay ahead.
               </dd>
@@ -62,7 +62,7 @@ export default function NewsLetter() {
               <dt className="mt-4 text-base font-semibold text-white">
                 No spam
               </dt>
-              <dd className="mt-2 text-base/7 text-gray-400">
+              <dd className="mt-2 text-base/7 text-gray-400 leading-relaxed text-justify whitespace-pre-line">
                 We respect your inbox. You’ll only receive valuable content,
                 never irrelevant promotions or spam.
               </dd>

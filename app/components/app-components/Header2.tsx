@@ -19,6 +19,9 @@ import {
   SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { PiPantsFill } from "react-icons/pi";
+import { IoShirt } from "react-icons/io5";
+
 import {
   ChevronDownIcon,
   PhoneIcon,
@@ -29,36 +32,36 @@ import clsx from "clsx";
 
 const products = [
   {
-    name: "Analytics",
+    name: "Upper Outwear",
     description: "Get a better understanding of your traffic",
     href: "#",
-    icon: ChartPieIcon,
+    icon: IoShirt,
   },
   {
-    name: "Engagement",
+    name: "Lower OutWear",
     description: "Speak directly to your customers",
     href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
+    icon: PiPantsFill,
   },
 ];
 const reports = [
   {
     name: "RSC Audit Report",
-    description: "Get a better understanding of your traffic",
-    href: "#",
+    description: "RMG Sustainability Council (RSC)",
+    href: "/reports/rsc-audit-reports",
     icon: ChartPieIcon,
+  },
+  {
+    name: "BSC Audit Report",
+    description: "Speak directly to your customers",
+    href: "#",
+    icon: CursorArrowRaysIcon,
+  },
+  {
+    name: "BSC Audit Report",
+    description: "Speak directly to your customers",
+    href: "#",
+    icon: CursorArrowRaysIcon,
   },
   {
     name: "BSC Audit Report",
@@ -146,7 +149,7 @@ export default function Header2() {
               transition
               className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
-              <div className="p-4">
+              <div className="p-4 max-h-[12.5rem] overflow-auto">
                 {reports.map((item) => (
                   <div
                     key={item.name}
@@ -202,7 +205,7 @@ export default function Header2() {
               transition
               className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
-              <div className="p-4">
+              <div className="p-4 max-h-[12.5rem] overflow-auto">
                 {products.map((item) => (
                   <div
                     key={item.name}
