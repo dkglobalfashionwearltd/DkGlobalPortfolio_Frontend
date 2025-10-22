@@ -7,9 +7,7 @@ import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
 
 export default function Contact() {
   const dispatch = useAppDispatch();
-  const { loading, data, refresh } = useAppSelector(
-    (state) => state.companyInfo
-  );
+  const { loading, data } = useAppSelector((state) => state.companyInfo);
   const token = "";
   const id = 1;
 
@@ -241,7 +239,7 @@ export default function Contact() {
             <iframe
               className="mt-4 rounded-xl shadow-xl ring-1 ring-gray-400/10 "
               title="Google Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14583.45863609116!2d90.30898685!3d23.96522555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755dd4d76ebea5d%3A0xb2be8cc5e265a462!2sDK%20Global%20Fashion%20Wear%20Limited!5e0!3m2!1sen!2sbd!4v1760527086034!5m2!1sen!2sbd"
+              src={data?.result?.mapLink}
               width="100%"
               height="250"
               style={{ border: 0 }}
@@ -255,7 +253,7 @@ export default function Contact() {
             <iframe
               className="mt-4 rounded-xl shadow-xl ring-1 ring-gray-400/10 "
               title="Google Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d177796.35236520768!2d90.19244183269794!3d23.93652776211261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c58bf1f36633%3A0x14eca7d621593446!2sDk%20Global%20Fashion%20Wear%20Ltd.%20Corporate%20Office!5e0!3m2!1sen!2sbd!4v1760588120690!5m2!1sen!2sbd"
+              src={data?.result?.secondMapLink}
               width="100%"
               height="250"
               style={{ border: 0 }}

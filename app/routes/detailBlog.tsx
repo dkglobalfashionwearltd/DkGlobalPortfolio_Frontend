@@ -82,7 +82,7 @@ const BlogDetails: React.FC = () => {
     };
 
     fetchBlogPost();
-  }, []);
+  }, [id]);
 
   console.log("data-list", dataList?.result);
 
@@ -337,8 +337,8 @@ const BlogDetails: React.FC = () => {
                         <span className="text-sm text-gray-500">
                           {formatDate(post.publishedAt ?? post.createdAt)}
                         </span>
-                        <button
-                          onClick={() => navigate(`/blog/${post.slug}`)}
+                        <Link
+                          to={`/blogs/${post?.id}`}
                           className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center"
                         >
                           Read more
@@ -354,7 +354,7 @@ const BlogDetails: React.FC = () => {
                               clipRule="evenodd"
                             />
                           </svg>
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

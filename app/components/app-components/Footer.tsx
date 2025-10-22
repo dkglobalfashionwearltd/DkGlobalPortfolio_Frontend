@@ -7,10 +7,10 @@ const Footer = () => {
   return (
     <>
       {/* newsletter */}
+
       <div>
         <NewsLetter />
       </div>
-
       <div className="p-4 px-10 py-14">
         <div className="flex gap-10 justify-between flex-col sm:flex-row mt-5">
           <div>

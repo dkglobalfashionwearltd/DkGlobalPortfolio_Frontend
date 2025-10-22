@@ -17,6 +17,7 @@ export type CompanyInfo = {
   phoneNumber: string;
   location: string;
   mapLink: string;
+  secondMapLink: string;
   facebookLink: string;
   youtubeLink: string;
   linkedInLink: string;
