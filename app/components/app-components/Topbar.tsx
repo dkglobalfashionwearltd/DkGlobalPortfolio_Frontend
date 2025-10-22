@@ -17,21 +17,23 @@ const Topbar = () => {
   const { loading, data } = useAppSelector((state) => state.companyInfo);
   const token = "";
   const id = 1;
+
   useEffect(() => {
     dispatch(getCompanyInfo({ token, id }));
-  }, []);
+  }, [dispatch]);
+
   return (
-    <div className="w-full bg-gray-900 text-gray-100 text-sm">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-2 gap-2">
+    <div className="w-full bg-gray-900 text-gray-100 text-xs sm:text-sm ">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-2 gap-2 text-center sm:text-left">
         {/* Contact Info */}
-        <div className="flex flex-wrap items-center gap-4 h-[1rem]">
-          <div>
-            <h1>{data?.result?.name ?? "Dk Global Fashion Wear Ltd."}</h1>
-          </div>
-          <Separator orientation="vertical" />
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+          <span className="font-semibold">
+            {data?.result?.name ?? "Dk Global Fashion Wear Ltd."}
+          </span>
+          <Separator orientation="vertical" className="hidden sm:block" />
           <Link
             to={`mailto:${data?.result?.email}`}
-            className="group flex items-center gap-1 transition hover:underline"
+            className="group flex items-center gap-1 hover:underline transition"
           >
             <EnvelopeIcon className="h-4 w-4 text-gray-100 transition group-hover:text-red-500" />
             {loading || !data?.result ? (
@@ -40,22 +42,20 @@ const Topbar = () => {
               data?.result?.email
             )}
           </Link>
-
-          {/* <Link
-            to={`tel:${data?.result?.phoneNumber}`}
-            className="flex items-center gap-1 hover:text-blue-400 transition"
-          >
-            <PhoneIcon className="h-4 w-4" />
-            {loading || !data?.result ? (
-              <Skeleton className="h-4 w-32" />
-            ) : (
-              data?.result?.phoneNumber
-            )}
-          </Link> */}
+          <Separator orientation="vertical" className="hidden sm:block" />
+          {data?.result?.phoneNumber && (
+            <Link
+              to={`tel:${data?.result?.phoneNumber}`}
+              className="flex items-center gap-1 hover:underline transition"
+            >
+              <PhoneIcon className="h-4 w-4 text-gray-100 transition group-hover:text-green-500" />
+              {data?.result?.phoneNumber}
+            </Link>
+          )}
         </div>
 
         {/* Social Media Links */}
-        <div className="flex items-center gap-3 h-[1rem]">
+        <div className="flex items-center justify-center gap-4 mt-2 sm:mt-0">
           <Link
             to={data?.result?.facebookLink ?? "https://facebook.com"}
             target="_blank"
@@ -64,27 +64,24 @@ const Topbar = () => {
           >
             <FaFacebookF />
           </Link>
-          <Separator orientation="vertical" />
           <Link
-            to={data?.result?.facebookLink ?? "https://twitter.com"}
+            to={data?.result?.twitterLink ?? "https://twitter.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-sky-400 transition"
           >
             <FaTwitter />
           </Link>
-          <Separator orientation="vertical" />
           <Link
-            to={data?.result?.facebookLink ?? "https://linkedin.com"}
+            to={data?.result?.linkedInLink ?? "https://linkedin.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-600 transition"
           >
             <FaLinkedinIn />
           </Link>
-          <Separator orientation="vertical" />
           <Link
-            to={data?.result?.facebookLink ?? "https://instagram.com"}
+            to={data?.result?.instagramLink ?? "https://instagram.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-pink-500 transition"

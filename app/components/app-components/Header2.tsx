@@ -30,13 +30,13 @@ const products = [
   {
     name: "Upper Outwear",
     description: "Get a better understanding of your traffic",
-    href: "#",
+    href: "/upper-outwears",
     icon: IoShirt,
   },
   {
     name: "Lower OutWear",
     description: "Speak directly to your customers",
-    href: "#",
+    href: "/lower-outwears",
     icon: PiPantsFill,
   },
 ];

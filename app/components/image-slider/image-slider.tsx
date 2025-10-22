@@ -88,7 +88,7 @@ const ImageSlider = () => {
       {/* Slides wrapper */}
       <div
         ref={sliderRef}
-        className="flex transition-transform duration-700 ease-in-out"
+        className="w-full flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -120,7 +120,7 @@ const ImageSlider = () => {
 
       {/* Next Button */}
       <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:scale-110 transition-all "
+        className="absolute right-5 top-1/2 -translate-y-1/2 text-white hover:scale-110 transition-all "
         onClick={slideNext}
       >
         <ArrowRightCircleIcon className="size-10" />
@@ -128,7 +128,7 @@ const ImageSlider = () => {
 
       {/* Prev Button */}
       <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 text-white hover:scale-110 transition-all"
+        className="absolute left-5 top-1/2 -translate-y-1/2 text-white hover:scale-110 transition-all"
         onClick={slidePrev}
       >
         <ArrowLeftCircleIcon className="size-10" />

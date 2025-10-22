@@ -26,7 +26,7 @@ export default function TeamSummary() {
           </p>
           <div className="mt-5">
             <Link to="/teams" className="text-sm/6 font-semibold text-red-600">
-              Learn more
+              See more
               <span aria-hidden="true">→</span>
             </Link>
           </div>

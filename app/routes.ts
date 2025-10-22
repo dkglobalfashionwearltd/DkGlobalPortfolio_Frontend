@@ -9,5 +9,8 @@ export default [
     route("blogs/:id", "routes/detailBlog.tsx"),
     route("reports/rsc-audit-reports", "routes/reports/rsc-reports.tsx"),
     route("blogs/view", "routes/view-blog.tsx"),
+    route("teams", "routes/team.tsx"),
+    route("upper-outwears", "routes/products/upper-outwear.tsx"),
+    route("lower-outwears", "routes/products/lower-outwear.tsx"),
   ]),
 ] satisfies RouteConfig;

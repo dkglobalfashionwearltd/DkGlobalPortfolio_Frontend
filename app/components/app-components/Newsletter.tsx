@@ -2,7 +2,7 @@ import { CalendarDaysIcon, HandRaisedIcon } from "@heroicons/react/24/outline";
 
 export default function NewsLetter() {
   return (
-    <div className="relative isolate overflow-hidden bg-white py-16 sm:py-24 lg:py-32 border-t">
+    <div className="relative isolate overflow-hidden bg-white px-10 py-16 sm:py-24 lg:py-32 border-t">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
           <div className="max-w-xl lg:max-w-lg">
