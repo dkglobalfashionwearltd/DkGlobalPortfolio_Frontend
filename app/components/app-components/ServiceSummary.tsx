@@ -2,8 +2,24 @@ import { Link } from "react-router";
 import { MdFactory } from "react-icons/md";
 import { BiSolidPurchaseTag } from "react-icons/bi";
 import images from "../image-slider/images";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { useEffect } from "react";
+import {
+  getAllProfileImages,
+  getProfileImages,
+} from "~/redux/features/ProfileImageSlice";
+import { Skeleton } from "../ui/skeleton";
 
 export default function ServiceSummary() {
+  const dispatch = useAppDispatch();
+  const { loading, dataList, refresh } = useAppSelector(
+    (state) => state.profile_images
+  );
+  const token = "";
+  useEffect(() => {
+    dispatch(getAllProfileImages({ token }));
+  }, [refresh]);
+  const findData = dataList?.result?.find((f) => f.id == 8);
   return (
     <div className="bg-gray-50 py-24 sm:py-32">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
@@ -27,13 +43,17 @@ export default function ServiceSummary() {
                 </p>
               </div>
               <div className="@container relative min-h-120 w-full grow max-lg:mx-auto max-lg:max-w-sm">
-                <div className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
-                  <img
-                    alt=""
-                    src="/images/serviceimg1.jpg"
-                    className="size-full object-cover object-top"
-                  />
-                </div>
+                {loading || !findData ? (
+                  <Skeleton className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl" />
+                ) : (
+                  <div className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
+                    <img
+                      alt={findData?.title}
+                      src={findData?.imageUrl}
+                      className="size-full object-cover object-top"
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 lg:rounded-l-4xl" />

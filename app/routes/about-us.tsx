@@ -13,17 +13,26 @@ import ClientSlider from "~/components/app-components/ClientSlider";
 import { Spinner } from "~/components/ui/spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import ImageGallery from "~/components/app-components/image-gallery";
+import { getProfileImages } from "~/redux/features/ProfileImageSlice";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const Company = () => {
   const dispatch = useAppDispatch();
   const { loading, data, refresh } = useAppSelector(
     (state) => state.companyInfo
   );
+  const {
+    loading: pro_loading,
+    data: pro_data,
+    refresh: pro_refresh,
+  } = useAppSelector((state) => state.profile_images);
   const token = "";
   const id = 1;
+  const ProId = 1;
 
   useEffect(() => {
     dispatch(getCompanyInfo({ token, id }));
+    dispatch(getProfileImages({ token, id: ProId }));
   }, []);
 
   const stats = [
@@ -89,9 +98,6 @@ const Company = () => {
                   An Ultimate Garments Manufactuer in Market since 2014
                 </p>
 
-                {/* <p className="mt-6 text-lg/8 text-gray-700">
-                  {data?.result?.description}
-                </p> */}
                 <div className="mt-5">
                   {loading ? (
                     <Spinner />
@@ -99,12 +105,14 @@ const Company = () => {
                     <p
                       className="text-gray-700 leading-relaxed text-justify whitespace-pre-line"
                       dangerouslySetInnerHTML={{
-                        __html: data?.result?.description
-                          ?.replaceAll(". ", ".<br>")
-                          ?.replaceAll(
-                            "DK GLOBAL FASHION WEAR",
-                            "<span class='font-semibold text-indigo-600'>DK GLOBAL FASHION WEAR</span>"
-                          ),
+                        __html:
+                          data?.result?.description
+                            ?.replaceAll(". ", ".<br>")
+                            ?.replaceAll(
+                              "DK GLOBAL FASHION WEAR",
+                              "<span class='font-semibold text-indigo-600'>DK GLOBAL FASHION WEAR</span>"
+                            ) ??
+                          "<span class='font-semibold text-indigo-600'>Data Not Found</span>",
                       }}
                     ></p>
                   )}
@@ -112,13 +120,17 @@ const Company = () => {
               </div>
             </div>
             <div>
-              <img
-                alt="Product screenshot"
-                src="/images/workstation.png"
-                width={2432}
-                height={1442}
-                className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0"
-              />
+              {pro_loading ? (
+                <Skeleton className="w-3xl h-full max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0" />
+              ) : (
+                <img
+                  alt={pro_data?.result?.title}
+                  src={pro_data?.result?.imageUrl}
+                  width={2432}
+                  height={1442}
+                  className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -136,7 +148,7 @@ const Company = () => {
             arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at vitae
             feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget.
             Eleifend egestas fringilla sapien.
-            {data?.result?.mission}
+            {loading ? <Spinner /> : data?.result?.mission}
           </h3>
           <h1 className="text-4xl font-bold mb-10">Our Vision</h1>
           <h3 className="text-lg leading-relaxed text-justify whitespace-pre-line">
@@ -146,7 +158,7 @@ const Company = () => {
             neque erat velit. Faucibus commodo massa rhoncus, volutpat.
             Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae
             sed turpis id.
-            {data?.result?.vision}
+            {loading ? <Spinner /> : data?.result?.vision}
           </h3>
         </div>
         <div>

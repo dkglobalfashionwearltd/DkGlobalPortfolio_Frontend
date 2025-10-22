@@ -4,12 +4,27 @@ import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { getAllProfileImages } from "~/redux/features/ProfileImageSlice";
+import SliderSkeleton from "../app-components/image-slider-skeleton";
 
 const ImageSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [timeID, setTimeID] = useState<NodeJS.Timeout | null>(null);
+  const dispatch = useAppDispatch();
+  const { loading, dataList, refresh } = useAppSelector(
+    (state) => state.profile_images
+  );
+  const token = "";
 
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    dispatch(getAllProfileImages({ token }));
+  }, [refresh]);
+  const filterImages = dataList?.result?.filter((item) =>
+    item?.title?.toLowerCase().includes("slider")
+  );
 
   // ✅ Autoplay
   useEffect(() => {
@@ -62,7 +77,9 @@ const ImageSlider = () => {
     }
   };
 
-  return (
+  return loading || !dataList?.result ? (
+    <SliderSkeleton />
+  ) : (
     <div
       className="relative w-full overflow-hidden bg-white"
       onMouseEnter={stopAutoPlay}
@@ -77,11 +94,11 @@ const ImageSlider = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {images.map((item, index) => (
+        {filterImages?.map((item, index) => (
           <div key={index} className="w-full flex-shrink-0">
             <img
-              src={item.imgURL}
-              alt={item.imgAlt}
+              src={item.imageUrl}
+              alt={item.title}
               className="w-full h-[300px] sm:h-[650px] object-cover"
             />
           </div>
@@ -90,7 +107,7 @@ const ImageSlider = () => {
 
       {/* Dots */}
       <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 flex">
-        {images.map((_, index) => (
+        {filterImages?.map((_, index) => (
           <button
             key={index}
             className={`w-2 h-2 rounded-full border border-gray-400 mx-1 transition-colors duration-500 ${

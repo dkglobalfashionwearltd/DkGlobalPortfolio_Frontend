@@ -7,12 +7,9 @@ import { baseUrl } from "~/components/data";
 
 import { apiRequest } from "~/redux/data/GetData";
 
-export type Leadership = {
+export type ProfileImage = {
   id: number;
-  name: string;
-  designation: string;
-  email: string;
-  phoneNumber: string;
+  title: string;
   imageUrl: string;
   isActive: string;
 };
@@ -20,11 +17,18 @@ interface Data {
   statusCode: number;
   success: boolean;
   message: string;
-  result: Leadership[];
+  result: ProfileImage;
+}
+interface DataList {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  result: ProfileImage[];
 }
 interface StateType {
   loading: boolean;
   data: Data | null;
+  dataList: DataList | null;
   error: string | null;
   refresh: boolean;
   statusChange: boolean;
@@ -32,18 +36,19 @@ interface StateType {
 const initialState: StateType = {
   loading: true,
   data: null,
+  dataList: null,
   error: null,
   refresh: false,
   statusChange: false,
 };
 
-export const getAllLeadership = createAsyncThunk(
-  "leadership/getAllLeadership",
+export const getAllProfileImages = createAsyncThunk(
+  "profile-images/getAllProfileImages",
   async ({ token }: { token: string | null }, { rejectWithValue }) => {
     try {
       const res = await apiRequest(
         "get",
-        `${baseUrl}/api/leadership/getall`,
+        `${baseUrl}/api/profile-images/getall`,
         token,
         "application/json",
         {},
@@ -53,14 +58,14 @@ export const getAllLeadership = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(
-        error?.response?.data?.message || "Failed to get leader data"
+        error?.response?.data?.message || "Failed to get profile-images data"
       );
     }
   }
 );
 
-export const getLeadership = createAsyncThunk(
-  "leadership/getLeadership",
+export const getProfileImages = createAsyncThunk(
+  "profile-images/getProfileImages",
   async (
     { token, id }: { token: string | null; id: number },
     { rejectWithValue }
@@ -68,7 +73,7 @@ export const getLeadership = createAsyncThunk(
     try {
       const res = await apiRequest(
         "get",
-        `${baseUrl}/api/leadership/get`,
+        `${baseUrl}/api/profile-images/get`,
         token,
         "application/json",
         { id },
@@ -78,34 +83,49 @@ export const getLeadership = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(
-        error?.response?.data?.message || "Failed to get leader data"
+        error?.response?.data?.message || "Failed to get profile-images data"
       );
     }
   }
 );
 
-const leadershipSlice = createSlice({
-  name: "leadership",
+const profileImagesSlice = createSlice({
+  name: "profile-images",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllLeadership.pending, (state) => {
+      .addCase(getAllProfileImages.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
-        getAllLeadership.fulfilled,
+        getAllProfileImages.fulfilled,
+        (state, action: PayloadAction<DataList>) => {
+          state.loading = false;
+          state.dataList = action.payload;
+        }
+      )
+      .addCase(getAllProfileImages.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getProfileImages.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getProfileImages.fulfilled,
         (state, action: PayloadAction<Data>) => {
           state.loading = false;
           state.data = action.payload;
         }
       )
-      .addCase(getAllLeadership.rejected, (state, action) => {
+      .addCase(getProfileImages.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export default leadershipSlice.reducer;
+export default profileImagesSlice.reducer;

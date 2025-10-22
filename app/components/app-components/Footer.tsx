@@ -52,11 +52,11 @@ const Footer = () => {
               <Link to={"/about-us"}>
                 <li className="hover:underline ">About Us</li>
               </Link>
-              <Link to={""}>
+              <Link to={"/blogs"}>
                 <li className="hover:underline ">Blogs</li>
               </Link>
               <Link to={""}>
-                <li className="hover:underline ">Jobs</li>
+                <li className="hover:underline ">Career</li>
               </Link>
             </ul>
           </div>

@@ -131,7 +131,7 @@ const ImageGallery: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br py-12 px-4">
+    <div className="min-h-screen xl:min-h-full xl:mb-32 bg-gradient-to-br py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -144,7 +144,7 @@ const ImageGallery: React.FC = () => {
         </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10 gap-6">
           {images.slice(0, 4).map((image, index) => (
             <div
               key={image.id}

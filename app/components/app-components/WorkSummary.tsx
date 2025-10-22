@@ -3,23 +3,28 @@ import { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { Link } from "react-router";
-import {
-  getAllCompanyInfo,
-  getCompanyInfo,
-} from "~/redux/features/companyInfoSlice";
+import { getCompanyInfo } from "~/redux/features/companyInfoSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
-import { Spinner } from "../ui/spinner";
+import { Skeleton } from "../ui/skeleton";
+import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 
 export default function WorkSummary() {
   const dispatch = useAppDispatch();
   const { loading, data, refresh } = useAppSelector(
     (state) => state.companyInfo
   );
+  const {
+    loading: pro_loading,
+    data: pro_data,
+    refresh: pro_refresh,
+  } = useAppSelector((state) => state.profile_images);
   const token = "";
   const id = 1;
+  const ProId = 1;
 
   useEffect(() => {
     dispatch(getCompanyInfo({ token, id }));
+    dispatch(getProfileImages({ token, id: ProId }));
   }, []);
 
   const features = [
@@ -76,12 +81,17 @@ export default function WorkSummary() {
                   <span aria-hidden="true">→</span>
                 </Link>
               </div>
+
               <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-                {data?.result?.shortTitle}
+                {loading || !data?.result ? (
+                  <Skeleton className="h-10" />
+                ) : (
+                  data?.result?.shortTitle
+                )}
               </p>
               <p className="mt-6 text-lg/8 text-gray-700 leading-relaxed text-justify whitespace-pre-line">
-                {loading ? (
-                  <Spinner className="size-6 text-center w-full" />
+                {loading || !data?.result ? (
+                  <Skeleton className="h-32" />
                 ) : (
                   extracted
                 )}
@@ -103,13 +113,17 @@ export default function WorkSummary() {
             </div>
           </div>
 
-          <img
-            alt="Product screenshot"
-            src="/images/workstation.png"
-            width={2432}
-            height={1442}
-            className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0"
-          />
+          {pro_loading || !pro_data?.result ? (
+            <Skeleton className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0" />
+          ) : (
+            <img
+              alt={pro_data?.result?.title}
+              src={pro_data?.result?.imageUrl}
+              width={2432}
+              height={1442}
+              className="w-3xl max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0"
+            />
+          )}
         </div>
       </div>
     </div>

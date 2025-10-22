@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router";
 import { getAllLeadership } from "~/redux/features/leadershipSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
-import { Spinner } from "../ui/spinner";
+import PersonCardSkeleton from "./person-card-skeleton";
 
 export default function TeamSummary() {
   const dispatch = useAppDispatch();
@@ -13,7 +13,6 @@ export default function TeamSummary() {
   useEffect(() => {
     dispatch(getAllLeadership({ token }));
   }, []);
-  console.log("leader data", data);
   return (
     <div className="bg-gray-100 py-20 sm:py-24">
       <div className="mx-auto grid gap-20 px-6 lg:px-10 xl:grid-cols-3 ">
@@ -36,12 +35,12 @@ export default function TeamSummary() {
           role="list"
           className="grid gap-x-8 gap-y-0 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2"
         >
-          {loading ? (
-            <Spinner className="size-8" />
+          {loading || !data?.result ? (
+            <PersonCardSkeleton />
           ) : (
             data?.result?.slice(0, 2).map((person) => (
               <li key={person.id}>
-                <div className="flex flex-col items-start gap-5">
+                <div className="flex flex-col items-start gap-5 max-sm:mb-5">
                   <img
                     alt="image"
                     src={person?.imageUrl ?? "image-place.avif"}

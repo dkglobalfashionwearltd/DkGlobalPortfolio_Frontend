@@ -1,65 +1,29 @@
+import { useEffect } from "react";
 import { Link } from "react-router";
-
-const posts = [
-  {
-    id: 1,
-    title: "The Textile Industry: History, Importance, Challenges & Future",
-    href: "#",
-    description:
-      "Discover the textile industry’s history, importance, challenges, and future trends. Learn how textiles drive global trade, fashion, and sustainability.",
-    date: "Mar 16, 2020",
-    datetime: "2020-03-16",
-    category: { title: "Textile Industry", href: "#" },
-    blogImgae: "/web.jpg",
-    author: {
-      name: "Michael Foster",
-      role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-  {
-    id: 1,
-    title: "Web Application",
-    href: "#",
-    description:
-      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-    date: "Mar 16, 2020",
-    datetime: "2020-03-16",
-    category: { title: "Website", href: "#" },
-    blogImgae: "/web.jpg",
-    author: {
-      name: "Michael Foster",
-      role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-  {
-    id: 1,
-    title: "Web Application",
-    href: "#",
-    description:
-      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-    date: "Mar 16, 2020",
-    datetime: "2020-03-16",
-    category: { title: "Website", href: "#" },
-    blogImgae: "/web.jpg",
-    author: {
-      name: "Michael Foster",
-      role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-
-  // More posts...
-];
+import { getAllBlog } from "~/redux/features/blogSlice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { format, parseISO } from "date-fns";
+import { Spinner } from "../ui/spinner";
+import BlogGridSkeleton from "./blog-grid-skeleton";
 
 export default function BlogSummary() {
+  const dispatch = useAppDispatch();
+  const { loading, dataList, refresh } = useAppSelector((state) => state.blog);
+  const token = "";
+  const cat = "posts";
+  useEffect(() => {
+    dispatch(getAllBlog({ token, cat }));
+  }, [refresh]);
+
+  console.log("list", dataList?.result);
+
+  const formatDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), "MMMM dd, yyyy");
+    } catch {
+      return dateString;
+    }
+  };
   return (
     <div className="bg-white py-16 sm:py-24">
       <div className="w-full px-6 lg:px-8">
@@ -72,69 +36,89 @@ export default function BlogSummary() {
             <span aria-hidden="true">→</span>
           </Link>
         </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.map((post) => (
-            <article
-              key={post.id}
-              className="flex flex-col items-start justify-between p-2"
-            >
-              <div className="flex gap-5 items-center">
-                <div>
-                  <div className="flex items-center gap-x-4 text-xs">
-                    <time dateTime={post.datetime} className="text-gray-500">
-                      {post.date}
-                    </time>
-                    <a
-                      href={post.category.href}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                    >
-                      {post.category.title}
-                    </a>
-                  </div>
-                  <div className="group relative">
-                    <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                      <a href={post.href}>
-                        <span className="absolute inset-0" />
-                        {post.title}
-                      </a>
-                    </h3>
-                    <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
-                      {post.description}
-                    </p>
-                  </div>
-                  <div className="relative mt-8 flex items-center gap-x-4">
-                    <img
-                      alt=""
-                      src={post.author.imageUrl}
-                      className="size-10 rounded-full bg-gray-50"
-                    />
-                    <div className="text-sm/6">
-                      <p className="font-semibold text-gray-900">
-                        <a href={post.author.href}>
-                          <span className="absolute inset-0" />
-                          {post.author.name}
-                        </a>
-                      </p>
-                      <p className="text-gray-600">{post.author.role}</p>
+        {loading || !dataList?.result ? (
+          <BlogGridSkeleton />
+        ) : (
+          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {[...(dataList?.result || [])]
+              ?.sort(() => 0.5 - Math.random())
+              ?.slice(0, 3)
+              ?.map((post) => (
+                <article
+                  key={post.id}
+                  className="flex flex-col items-start justify-between p-2"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <div className="flex items-center gap-x-4 text-xs">
+                        <time
+                          dateTime={post.publishedAt}
+                          className="text-gray-500"
+                        >
+                          {formatDate(post.publishedAt ?? post?.createdAt)}
+                        </time>
+                        <p className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                          {post?.categoryName}
+                        </p>
+                        <p
+                          className={`relative z-10 rounded-full px-3 py-1.5 font-medium 
+                              ${
+                                post?.status === "published"
+                                  ? "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                                  : "bg-gray-50 text-red-600 hover:bg-red-100"
+                              }`}
+                        >
+                          {post?.status}
+                        </p>
+                      </div>
+                      <div className="group relative">
+                        <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600 text-justify">
+                          <Link to={`/blogs/${post?.id}`}>
+                            <span className="absolute inset-0" />
+                            {post.title}
+                          </Link>
+                        </h3>
+                        <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600 leading-relaxed text-justify whitespace-pre-line">
+                          {post.excerpt}
+                        </p>
+                      </div>
+                      {/* Author Info */}
+                      <div className="flex items-center gap-4 py-4 border-t border-b border-gray-200 mb-6">
+                        <img
+                          src={post.authorAvatar}
+                          alt={post.authorName}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {post.authorName}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            {formatDate(post.publishedAt ?? post?.createdAt)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-5">
+                        <Link
+                          to={`/blogs/${post?.id}`}
+                          className="text-sm/6 font-semibold text-red-600"
+                        >
+                          Read more
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
+                    </div>
+                    <div id="image">
+                      <img
+                        className="h-[18rem] rounded-2xl w-full object-cover"
+                        src={post.featuredImage}
+                      />
                     </div>
                   </div>
-                  <div className="mt-5">
-                    <Link
-                      to="#"
-                      className="text-sm/6 font-semibold text-red-600"
-                    >
-                      Read more
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </div>
-                <div id="image">
-                  <img src={post.blogImgae} />
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+                </article>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
