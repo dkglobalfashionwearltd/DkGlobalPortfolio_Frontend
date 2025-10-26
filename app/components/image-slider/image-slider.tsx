@@ -99,7 +99,7 @@ const ImageSlider = () => {
             <img
               src={item.imageUrl}
               alt={item.title}
-              className="w-full h-[300px] sm:h-[650px] object-cover"
+              className="w-full h-[300px] sm:h-[650px] xl:h-[750px] object-cover sm:object-bottom-left"
             />
           </div>
         ))}

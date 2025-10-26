@@ -8,9 +8,9 @@ const Footer = () => {
     <>
       {/* newsletter */}
 
-      <div>
+      {/* <div>
         <NewsLetter />
-      </div>
+      </div> */}
       <div className="p-4 px-10 py-14">
         <div className="flex gap-10 justify-between flex-col sm:flex-row mt-5">
           <div>
@@ -75,7 +75,11 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="bg-black/20 h-[1px] mt-7 mb-7"></div>
+        <div className="bg-black/20 h-[1px] mt-7"></div>
+        <div>
+          <NewsLetter />
+        </div>
+        <div className="bg-black/20 h-[1px] mb-7"></div>
         <div className="text-sm text-gray-500">
           &#169; 2025 Dk Global Fashion Wear Ltd. All rights reserved
         </div>

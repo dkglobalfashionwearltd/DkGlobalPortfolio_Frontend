@@ -66,7 +66,7 @@ export default function WorkSummary() {
   return (
     <div className="overflow-hidden bg-white py-16 sm:py-24">
       <div className="px-7 lg:px-10">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-auto lg:max-w-[100rem] lg:grid-cols-2">
           <div className="lg:pt-4 lg:pr-8">
             <div className="lg:max-w-lg">
               <div className="flex gap-5 items-center">
