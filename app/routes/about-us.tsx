@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import { MdEmail, MdOutlinePhoneIphone } from "react-icons/md";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import Client from "~/components/app-components/clients";
 import TeamSummary from "~/components/app-components/TeamSummary";
-import Career from "~/components/app-components/career";
 import ErrorPage from "~/components/app-components/ErrorPage";
 import { isRouteErrorResponse } from "react-router";
 import type { Route } from "./+types/about-us";
