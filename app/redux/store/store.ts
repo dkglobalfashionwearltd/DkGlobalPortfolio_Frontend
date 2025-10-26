@@ -6,6 +6,7 @@ import ProfileImagesReducer from "../features/ProfileImageSlice";
 import reportReducer from "../features/reportSlice";
 import productReducer from "../features/productSlice";
 import messageReducer from "../features/messageSlice";
+import newsletterReducer from "../features/newsletterSlice";
 export const store = configureStore({
   reducer: {
     leader: leadershipReducer,
@@ -15,6 +16,7 @@ export const store = configureStore({
     report: reportReducer,
     product: productReducer,
     message: messageReducer,
+    newsletter: newsletterReducer,
   },
 });
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
