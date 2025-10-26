@@ -10,54 +10,46 @@ import {
   PopoverGroup,
   PopoverPanel,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  ChartPieIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { PiPantsFill } from "react-icons/pi";
-import { IoShirt } from "react-icons/io5";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import * as Icons from "@heroicons/react/24/outline";
+import * as Icons2 from "react-icons/pi";
 
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router";
 import clsx from "clsx";
-
-const products = [
-  {
-    name: "Upper Outwear",
-    description: "Get a better understanding of your traffic",
-    href: "/upper-outwears",
-    icon: IoShirt,
-  },
-  {
-    name: "Lower OutWear",
-    description: "Speak directly to your customers",
-    href: "/lower-outwears",
-    icon: PiPantsFill,
-  },
-];
-const reports = [
-  {
-    name: "RSC Audit Report",
-    description: "RMG Sustainability Council (RSC)",
-    href: "/reports/rsc-audit-reports",
-    icon: ChartPieIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "/contact-us", icon: PhoneIcon },
-];
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { getAllReportCategory } from "~/redux/features/reportSlice";
+import { getAllProductCategory } from "~/redux/features/productSlice";
+import { SkeletonCategoryItem } from "./category-skeleton";
 
 export default function Header2() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [bounced, setBounced] = useState(false);
   const [hasBounced, setHasBounced] = useState(false);
+  const dispatch = useAppDispatch();
+  const { loading, categoryData } = useAppSelector((state) => state.report);
+  const { loading: pLoading, categoryData: pCategory } = useAppSelector(
+    (state) => state.product
+  );
+  const token = "";
+
+  const getIcon = (name: string): React.ElementType => {
+    return (
+      (Icons as Record<string, React.ElementType>)[name] ||
+      Icons.QuestionMarkCircleIcon
+    );
+  };
+  const getIcon2 = (name: string): React.ElementType => {
+    return (
+      (Icons2 as Record<string, React.ElementType>)[name] || Icons2.PiQuestion
+    );
+  };
+
+  useEffect(() => {
+    dispatch(getAllReportCategory({ token }));
+    dispatch(getAllProductCategory({ token }));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,44 +120,38 @@ export default function Header2() {
               className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4 max-h-[12.5rem] overflow-auto">
-                {reports.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
-                  >
-                    <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
-                      <item.icon
-                        aria-hidden="true"
-                        className="size-6 text-gray-400 group-hover:text-white"
-                      />
-                    </div>
-                    <div className="flex-auto">
-                      <Link
-                        to={item.href}
-                        className="block font-semibold text-black"
+                {loading || !categoryData?.result ? (
+                  <SkeletonCategoryItem />
+                ) : (
+                  categoryData?.result?.map((item) => {
+                    const Icon = getIcon(item.icon);
+                    return (
+                      <div
+                        key={item.name}
+                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
                       >
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </Link>
-                      <p className="mt-1 text-gray-500">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-white/50 bg-gray-300">
-                {callsToAction.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-black hover:bg-gray-400/50"
-                  >
-                    <item.icon
-                      aria-hidden="true"
-                      className="size-5 flex-none text-black"
-                    />
-                    {item.name}
-                  </Link>
-                ))}
+                        <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
+                          <Icon
+                            aria-hidden="true"
+                            className="size-6 text-gray-400 group-hover:text-white"
+                          />
+                        </div>
+                        <div className="flex-auto">
+                          <Link
+                            to={item.link}
+                            className="block font-semibold text-black"
+                          >
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                          <p className="mt-1 text-gray-500">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </PopoverPanel>
           </Popover>
@@ -184,44 +170,38 @@ export default function Header2() {
               className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4 max-h-[12.5rem] overflow-auto">
-                {products.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
-                  >
-                    <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
-                      <item.icon
-                        aria-hidden="true"
-                        className="size-6 text-gray-400 group-hover:text-white"
-                      />
-                    </div>
-                    <div className="flex-auto">
-                      <Link
-                        to={item.href}
-                        className="block font-semibold text-black"
+                {pLoading || !pCategory?.result ? (
+                  <SkeletonCategoryItem />
+                ) : (
+                  pCategory?.result?.map((item) => {
+                    const Icon = getIcon2(item.icon);
+                    return (
+                      <div
+                        key={item.name}
+                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
                       >
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </Link>
-                      <p className="mt-1 text-gray-500">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-white/50 bg-gray-300">
-                {callsToAction.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-black hover:bg-gray-400/50"
-                  >
-                    <item.icon
-                      aria-hidden="true"
-                      className="size-5 flex-none text-black"
-                    />
-                    {item.name}
-                  </Link>
-                ))}
+                        <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
+                          <Icon
+                            aria-hidden="true"
+                            className="size-6 text-gray-400 group-hover:text-white"
+                          />
+                        </div>
+                        <div className="flex-auto">
+                          <Link
+                            to={item.link}
+                            className="block font-semibold text-black"
+                          >
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                          <p className="mt-1 text-gray-500">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </PopoverPanel>
           </Popover>
@@ -277,11 +257,11 @@ export default function Header2() {
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...reports, ...callsToAction].map((item) => (
+                    {categoryData?.result?.map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"
-                        href={item.href}
+                        href={item.link}
                         className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold hover:bg-white/5"
                       >
                         {item.name}
@@ -299,11 +279,11 @@ export default function Header2() {
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
+                    {pCategory?.result?.map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"
-                        href={item.href}
+                        href={item.link}
                         className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold hover:bg-white/5"
                       >
                         {item.name}

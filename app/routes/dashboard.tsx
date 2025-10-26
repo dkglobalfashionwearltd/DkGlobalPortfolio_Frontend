@@ -1,7 +1,6 @@
 import { isRouteErrorResponse, Outlet } from "react-router";
 import ErrorPage from "~/components/app-components/ErrorPage";
 import Footer from "~/components/app-components/Footer";
-import Header from "~/components/app-components/Header";
 import Header2 from "~/components/app-components/Header2";
 import Topbar from "~/components/app-components/Topbar";
 import type { Route } from "./+types/dashboard";

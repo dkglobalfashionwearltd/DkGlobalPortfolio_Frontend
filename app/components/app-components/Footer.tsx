@@ -39,8 +39,8 @@ const Footer = () => {
           <div className="flex flex-col gap-5">
             <h1 className="text-lg font-bold">Support</h1>
             <ul className="sm:flex sm:flex-col gap-4 text-black/60 grid grid-cols-2">
-              <li className="hover:underline ">Submit ticket</li>
-              <li className="hover:underline ">Guides</li>
+              <li className="">Submit Query &darr;</li>
+              <li className="">Guides &darr;</li>
               <Link to={"/contact-us"}>
                 <li className="hover:underline ">Contact Us</li>
               </Link>
@@ -55,7 +55,7 @@ const Footer = () => {
               <Link to={"/blogs"}>
                 <li className="hover:underline ">Blogs</li>
               </Link>
-              <Link to={""}>
+              <Link to={"/career"}>
                 <li className="hover:underline ">Career</li>
               </Link>
             </ul>
@@ -63,15 +63,21 @@ const Footer = () => {
           <div className="flex flex-col gap-5">
             <h1 className="text-lg font-bold">Legal</h1>
             <ul className="sm:flex sm:flex-col gap-4 text-black/60 grid grid-cols-2">
-              <li className="hover:underline ">Terms of service</li>
-              <li className="hover:underline ">Privacy policy</li>
-              <li className="hover:underline ">License</li>
+              <Link to={"/terms-of-service"}>
+                <li className="hover:underline ">Terms of service</li>
+              </Link>
+              <Link to={"/privacy-policy"}>
+                <li className="hover:underline ">Privacy policy</li>
+              </Link>
+              <Link to={"/license"}>
+                <li className="hover:underline ">License</li>
+              </Link>
             </ul>
           </div>
         </div>
         <div className="bg-black/20 h-[1px] mt-7 mb-7"></div>
         <div className="text-sm text-gray-500">
-          &#169; 2025 Cookie Software Ltd. All rights reserved
+          &#169; 2025 Dk Global Fashion Wear Ltd. All rights reserved
         </div>
       </div>
     </>

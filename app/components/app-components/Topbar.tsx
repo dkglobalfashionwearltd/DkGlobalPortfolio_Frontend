@@ -26,7 +26,7 @@ const Topbar = () => {
     <div className="w-full bg-gray-900 text-gray-100 text-xs sm:text-sm ">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-2 gap-2 text-center sm:text-left">
         {/* Contact Info */}
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <div className="sm:h-[1rem] flex flex-wrap items-center justify-center sm:justify-start gap-3">
           <span className="font-semibold">
             {data?.result?.name ?? "Dk Global Fashion Wear Ltd."}
           </span>
@@ -42,8 +42,7 @@ const Topbar = () => {
               data?.result?.email
             )}
           </Link>
-          <Separator orientation="vertical" className="hidden sm:block" />
-          {data?.result?.phoneNumber && (
+          {/* {data?.result?.phoneNumber && (
             <Link
               to={`tel:${data?.result?.phoneNumber}`}
               className="flex items-center gap-1 hover:underline transition"
@@ -51,11 +50,11 @@ const Topbar = () => {
               <PhoneIcon className="h-4 w-4 text-gray-100 transition group-hover:text-green-500" />
               {data?.result?.phoneNumber}
             </Link>
-          )}
+          )} */}
         </div>
 
         {/* Social Media Links */}
-        <div className="flex items-center justify-center gap-4 mt-2 sm:mt-0">
+        <div className="sm:h-[1rem] flex items-center justify-center gap-4 mt-2 sm:mt-0">
           <Link
             to={data?.result?.facebookLink ?? "https://facebook.com"}
             target="_blank"
@@ -64,6 +63,7 @@ const Topbar = () => {
           >
             <FaFacebookF />
           </Link>
+          <Separator orientation="vertical" className="hidden sm:block" />
           <Link
             to={data?.result?.twitterLink ?? "https://twitter.com"}
             target="_blank"
@@ -72,6 +72,7 @@ const Topbar = () => {
           >
             <FaTwitter />
           </Link>
+          <Separator orientation="vertical" className="hidden sm:block" />
           <Link
             to={data?.result?.linkedInLink ?? "https://linkedin.com"}
             target="_blank"
@@ -80,6 +81,7 @@ const Topbar = () => {
           >
             <FaLinkedinIn />
           </Link>
+          <Separator orientation="vertical" className="hidden sm:block" />
           <Link
             to={data?.result?.instagramLink ?? "https://instagram.com"}
             target="_blank"
