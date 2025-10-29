@@ -13,6 +13,7 @@ export default [
     route("terms-of-service", "routes/terms-of-service.tsx"),
     route("privacy-policy", "routes/privacy-policy.tsx"),
     route("license", "routes/license.tsx"),
+    route("certificates", "routes/certificate.tsx"),
     route("career", "routes/career.tsx"),
     route("upper-outwears", "routes/products/upper-outwear.tsx"),
     route("lower-outwears", "routes/products/lower-outwear.tsx"),

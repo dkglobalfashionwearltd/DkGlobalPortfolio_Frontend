@@ -7,6 +7,7 @@ import { getCompanyInfo } from "~/redux/features/companyInfoSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
 import { Skeleton } from "../ui/skeleton";
 import { getProfileImages } from "~/redux/features/ProfileImageSlice";
+import { Badge } from "../ui/badge";
 
 export default function WorkSummary() {
   const dispatch = useAppDispatch();
@@ -27,6 +28,10 @@ export default function WorkSummary() {
     dispatch(getProfileImages({ token, id: ProId }));
   }, []);
 
+  const formatNumber = (number: number | 0) => {
+    return new Intl.NumberFormat("en-US").format(number);
+  };
+
   const features = [
     {
       name: "Automation.",
@@ -42,12 +47,41 @@ export default function WorkSummary() {
     },
     {
       name: "Number Of Workers & Lines.",
-      description: `Current workers ${data?.result?.numberOfEmployees} & ${data?.result?.numberOfSewingPlants} lines`,
+      description: (
+        <span className="flex flex-wrap items-center gap-2">
+          Current workforce of
+          <Badge
+            variant="default"
+            className="bg-blue-100 text-blue-800 border-blue-200"
+          >
+            {formatNumber(data?.result?.numberOfEmployees ?? 0)} workers
+          </Badge>
+          operating across
+          <Badge
+            variant="default"
+            className="bg-green-100 text-green-800 border-green-200"
+          >
+            {formatNumber(data?.result?.numberOfSewingPlants ?? 0)} production
+            lines
+          </Badge>
+        </span>
+      ),
       icon: FaUser,
     },
     {
       name: "Monthly Production.",
-      description: `Outerwear / Workwear: ${data?.result?.productionCapacity} units per month.`,
+      description: (
+        <span className="flex flex-wrap items-center gap-2">
+          Outerwear / Workwear :
+          <Badge
+            variant={"default"}
+            className="bg-blue-500 text-white border-green-200"
+          >
+            {formatNumber(data?.result?.productionCapacity ?? 0)}
+          </Badge>
+          units per month.
+        </span>
+      ),
       icon: MdProductionQuantityLimits,
     },
   ];
@@ -69,19 +103,6 @@ export default function WorkSummary() {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-auto lg:max-w-[100rem] lg:grid-cols-2">
           <div className="lg:pt-4 lg:pr-8">
             <div className="lg:max-w-lg">
-              <div className="flex gap-5 items-center">
-                <h2 className="text-lg font-semibold text-indigo-600">
-                  About Us
-                </h2>
-                <Link
-                  to="/about-us"
-                  className="text-sm/6 font-semibold text-red-600"
-                >
-                  See more
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-
               <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
                 {loading || !data?.result ? (
                   <Skeleton className="h-10" />

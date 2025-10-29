@@ -237,8 +237,8 @@ export default function Contact() {
         </form>
       </div>
       {/* location */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="mt-10 border-none rounded-md bg-gray-100 p-8 flex flex-col gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="mt-10 border-none rounded-md bg-gray-100 p-8 flex flex-col gap-4 max-sm:col-span-2">
           <h1 className="text-xl font-bold">Contact</h1>
           <p className="text-indigo-600 flex gap-2 items-center">
             <MdEmail /> {data?.result?.email}

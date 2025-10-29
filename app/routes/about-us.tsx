@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import ImageGallery from "~/components/app-components/image-gallery";
 import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 import { Skeleton } from "~/components/ui/skeleton";
+import PdfFlipBook from "~/components/app-components/pdf-reader";
+import PdfFlipBookClient from "~/components/app-components/PdfFlipBook";
 
 const Company = () => {
   const dispatch = useAppDispatch();
@@ -31,16 +33,20 @@ const Company = () => {
     dispatch(getProfileImages({ token, id: ProId }));
   }, []);
 
+  const formatNumber = (number: number | 0) => {
+    return new Intl.NumberFormat("en-US").format(number);
+  };
+
   const stats = [
     {
       id: 1,
       name: "Annual Turnover",
-      value: `USD ${data?.result?.annualTurnover} Million`,
+      value: `USD ${formatNumber(data?.result?.annualTurnover ?? 0)} Million`,
     },
     {
       id: 2,
       name: "Production Capacity",
-      value: `${data?.result?.productionCapacity} Pcs/Per Month`,
+      value: `${formatNumber(data?.result?.productionCapacity ?? 0)} Pcs/Per Month`,
     },
     {
       id: 3,
@@ -50,7 +56,7 @@ const Company = () => {
     {
       id: 4,
       name: "Number of Employees",
-      value: `${data?.result?.numberOfEmployees} (Current)`,
+      value: `${formatNumber(data?.result?.numberOfEmployees ?? 0)} (Current)`,
     },
     {
       id: 5,
@@ -140,20 +146,10 @@ const Company = () => {
         <div>
           <h1 className="text-4xl font-bold mb-10">Our mission</h1>
           <h3 className="text-lg mb-8 leading-relaxed text-justify whitespace-pre-line">
-            Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At
-            arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at vitae
-            feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget.
-            Eleifend egestas fringilla sapien.
             {loading ? <Spinner /> : data?.result?.mission}
           </h3>
           <h1 className="text-4xl font-bold mb-10">Our Vision</h1>
           <h3 className="text-lg leading-relaxed text-justify whitespace-pre-line">
-            Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
-            enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
-            praesent donec est. Odio penatibus risus viverra tellus varius sit
-            neque erat velit. Faucibus commodo massa rhoncus, volutpat.
-            Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae
-            sed turpis id.
             {loading ? <Spinner /> : data?.result?.vision}
           </h3>
         </div>
@@ -161,7 +157,7 @@ const Company = () => {
           <div className="bg-white">
             <div className="px-6 lg:px-8">
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16 text-center">
-                {stats.map((stat) => (
+                {stats?.map((stat) => (
                   <Card key={stat.id}>
                     <CardHeader>
                       <CardTitle className="tracking-wide">
@@ -186,6 +182,9 @@ const Company = () => {
       <div>
         <TeamSummary />
       </div>
+      {/* pdf */}
+      <PdfFlipBookClient />
+      <PdfFlipBook fileUrl="https://localhost:7274/profile-images/4f89c91b-f4e6-46c4-b0e6-2013dd24edc5.pdf" />
     </div>
   );
 };

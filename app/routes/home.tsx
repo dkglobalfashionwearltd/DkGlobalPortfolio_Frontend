@@ -8,6 +8,8 @@ import WorkSummary from "~/components/app-components/WorkSummary";
 import ImageSlider from "~/components/image-slider/image-slider";
 import type { Route } from "./+types/home";
 import ClientSlider from "~/components/app-components/ClientSlider";
+import ServiceSummary2 from "~/components/app-components/service-summary-2";
+import CertificateSummary from "~/components/app-components/certificate-summary";
 
 const Home = () => {
   return (
@@ -18,11 +20,11 @@ const Home = () => {
       </div>
       {/* service summary */}
       <div>
-        <ServiceSummary />
+        <ServiceSummary2 />
       </div>
       {/* work summary */}
       <div>
-        <WorkSummary />
+        <CertificateSummary />
       </div>
       {/* blog section */}
       <div>

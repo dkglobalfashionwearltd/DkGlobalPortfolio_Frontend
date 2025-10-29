@@ -38,7 +38,7 @@ export default function TeamSummary() {
           {loading || !data?.result ? (
             <PersonCardSkeleton />
           ) : (
-            data?.result?.slice(0, 2).map((person) => (
+            data?.result?.slice(0, 2)?.map((person) => (
               <li key={person.id}>
                 <div className="flex flex-col items-start gap-5 max-sm:mb-5">
                   <img

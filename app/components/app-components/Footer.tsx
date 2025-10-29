@@ -6,11 +6,6 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <>
-      {/* newsletter */}
-
-      {/* <div>
-        <NewsLetter />
-      </div> */}
       <div className="p-4 px-10 py-14">
         <div className="flex gap-10 justify-between flex-col sm:flex-row mt-5">
           <div>
@@ -69,8 +64,8 @@ const Footer = () => {
               <Link to={"/privacy-policy"}>
                 <li className="hover:underline ">Privacy policy</li>
               </Link>
-              <Link to={"/license"}>
-                <li className="hover:underline ">License</li>
+              <Link to={"/certificates"}>
+                <li className="hover:underline ">Certificates</li>
               </Link>
             </ul>
           </div>

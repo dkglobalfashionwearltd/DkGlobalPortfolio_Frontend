@@ -1,82 +1,104 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { motion } from "framer-motion";
 
-type PdfFlipBookProps = { fileUrl: string };
+// ✅ Set up the PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const PdfFlipBook: React.FC<PdfFlipBookProps> = ({ fileUrl }) => {
-  const [Document, setDocument] = useState<any>(null);
-  const [Page, setPage] = useState<any>(null);
-  const [mounted, setMounted] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState<string>("");
-  const [numPages, setNumPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
+export default function PdfFlipBookClient() {
+  const [fileUrl, setFileUrl] = useState<string>("");
+  const [numPages, setNumPages] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [error, setError] = useState<string>("");
 
+  // ✅ Client-only: safely set the absolute URL
   useEffect(() => {
-    setMounted(true);
-
     if (typeof window !== "undefined") {
-      setPdfUrl(`${window.location.origin}${fileUrl}`); // absolute URL for fetch
-
-      (async () => {
-        const reactPdf = await import("react-pdf");
-        setDocument(() => reactPdf.Document);
-        setPage(() => reactPdf.Page);
-
-        const { pdfjs } = reactPdf;
-        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-      })();
+      setFileUrl(
+        `https://localhost:7274/profile-images/4f89c91b-f4e6-46c4-b0e6-2013dd24edc5.pdf`
+      );
+      // setFileUrl(`${window.location.origin}/fire-report.pdf`);
     }
-  }, [fileUrl]);
+  }, []);
 
-  if (!mounted || !Document || !Page || !pdfUrl) {
-    return <div className="text-center text-gray-500 py-10">Loading PDF…</div>;
-  }
+  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+    setNumPages(numPages);
+    setError("");
+  };
 
-  const nextPage = () => {
-    if (pageNumber < numPages) setPageNumber((p) => p + 1);
-  };
-  const prevPage = () => {
-    if (pageNumber > 1) setPageNumber((p) => p - 1);
-  };
+  const goToPrevPage = () =>
+    setPageNumber((prev) => (prev > 1 ? prev - 1 : prev));
+  const goToNextPage = () =>
+    setPageNumber((prev) => (prev < numPages ? prev + 1 : prev));
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4">
-      <div className="relative overflow-hidden rounded-lg shadow-lg bg-gray-100 aspect-[4/3]">
-        <Document
-          file={pdfUrl}
-          onLoadSuccess={(pdf: any) => setNumPages(pdf.numPages)}
-          loading={<div className="text-gray-400">Loading document…</div>}
-        >
-          <Page
-            pageNumber={pageNumber}
-            renderTextLayer={false}
-            renderAnnotationLayer={false}
-            className="max-h-full object-contain"
-          />
-        </Document>
-      </div>
+    <div className="flex flex-col items-center justify-center w-full py-10 bg-gray-50">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-700">
+        Fire Safety Compliance Report
+      </h2>
 
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={prevPage}
-          disabled={pageNumber <= 1}
-          className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 disabled:opacity-40"
+      {!fileUrl && <p>Loading PDF...</p>}
+
+      {fileUrl && (
+        <Document
+          file={fileUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+          onLoadError={(err) => {
+            console.error("PDF Load Error:", err);
+            setError("Failed to load PDF. Try downloading instead.");
+          }}
         >
-          ◀
-        </button>
-        <span className="text-sm text-gray-600">
-          Page {pageNumber} of {numPages}
-        </span>
-        <button
-          onClick={nextPage}
-          disabled={pageNumber >= numPages}
-          className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 disabled:opacity-40"
-        >
-          ▶
-        </button>
-      </div>
+          <motion.div
+            key={pageNumber}
+            initial={{ opacity: 0, rotateY: 90 }}
+            animate={{ opacity: 1, rotateY: 0 }}
+            transition={{ duration: 0.6 }}
+            className="shadow-lg bg-white rounded-xl overflow-hidden"
+          >
+            <Page
+              pageNumber={pageNumber}
+              width={600}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+            />
+          </motion.div>
+        </Document>
+      )}
+
+      {error && (
+        <div className="mt-4 text-center text-red-500">
+          <p>{error}</p>
+          <a
+            href={fileUrl}
+            download
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            Download PDF
+          </a>
+        </div>
+      )}
+
+      {numPages > 1 && !error && (
+        <div className="flex items-center gap-4 mt-6">
+          <button
+            onClick={goToPrevPage}
+            disabled={pageNumber === 1}
+            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <p className="text-gray-700">
+            Page {pageNumber} of {numPages}
+          </p>
+          <button
+            onClick={goToNextPage}
+            disabled={pageNumber === numPages}
+            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
-};
-
-export default PdfFlipBook;
+}

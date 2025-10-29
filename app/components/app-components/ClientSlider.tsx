@@ -114,15 +114,20 @@ const ClientSlider = () => {
   }, []);
 
   return (
-    <div className="w-full h-[15rem] flex items-center bg-gray-50 overflow-hidden">
+    <div className="w-full h-[18rem] flex items-center bg-gray-50 overflow-hidden">
       <div className="relative overflow-hidden group">
+        <div className="py-10">
+          <h1 className="text-2xl font-bold text-center">
+            Our Valuable <span className="text-indigo-600">Clients</span>
+          </h1>
+        </div>
         <div
           className="flex animate-marquee"
           style={{ ["--marquee-duration" as any]: `${duration}s` }}
         >
           {/* First track */}
           <div ref={trackRef} className="flex shrink-0 items-center gap-12">
-            {logos.map((logo, i) => (
+            {logos?.map((logo, i) => (
               <img
                 key={`first-${i}`}
                 src={logo}
@@ -134,7 +139,7 @@ const ClientSlider = () => {
 
           {/* Duplicate track */}
           <div className="flex shrink-0 items-center gap-12 px-6">
-            {logos.map((logo, i) => (
+            {logos?.map((logo, i) => (
               <img
                 key={`second-${i}`}
                 src={logo}
