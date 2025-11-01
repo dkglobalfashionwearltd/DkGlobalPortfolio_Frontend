@@ -26,9 +26,15 @@ const Footer = () => {
           <div className="flex flex-col gap-5">
             <h1 className="text-lg font-bold">Solutions</h1>
             <ul className="sm:flex sm:flex-col gap-4 text-black/60 grid grid-cols-2">
-              <li>Outerwear</li>
-              <li>Workwear</li>
-              <li>Fashionwear</li>
+              <Link to={"/outerwears"}>
+                <li className="hover:underline">Outerwear</li>
+              </Link>
+              <Link to={"/workwears"}>
+                <li className="hover:underline">Workwear</li>
+              </Link>
+              <Link to={"/fashionwears"}>
+                <li className="hover:underline">Fashionwear</li>
+              </Link>
             </ul>
           </div>
           <div className="flex flex-col gap-5">

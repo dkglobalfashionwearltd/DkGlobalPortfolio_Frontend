@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import ImageGallery from "~/components/app-components/image-gallery";
 import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 import { Skeleton } from "~/components/ui/skeleton";
-import PdfFlipBookClient from "~/components/app-components/pdf-client";
 
 interface RouteParams {
   pdfUrl?: string;
@@ -194,10 +193,6 @@ const Company = () => {
       {/* team */}
       <div>
         <TeamSummary />
-      </div>
-      {/* pdf */}
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <PdfFlipBookClient />
       </div>
     </div>
   );

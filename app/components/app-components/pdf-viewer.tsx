@@ -4,7 +4,13 @@ import { Link } from "react-router";
 
 type PagePosition = "left" | "right";
 
-export default function PdfFlipBookReal() {
+export default function PdfFlipBookReal({
+  pdfUrl1,
+  title,
+}: {
+  pdfUrl1: string;
+  title: string;
+}) {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
@@ -16,7 +22,7 @@ export default function PdfFlipBookReal() {
   const [zoomLevel, setZoomLevel] = useState<number>(1.5); // Default zoom level
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const pdfUrl = "/Company-Profile.pdf";
+  const pdfUrl = pdfUrl1;
 
   // Client-side only
   useEffect(() => {
@@ -251,10 +257,7 @@ export default function PdfFlipBookReal() {
     return (
       <div className="flex flex-col items-center justify-center w-full py-10 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">
-            Outer Wear Profile
-          </h2>
-          <p className="text-gray-600">Interactive Flip Book Reader</p>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">{title}</h2>
         </div>
         <div className="w-[1560px] h-[720px] bg-white rounded-xl shadow-lg flex items-center justify-center">
           <div className="text-center">
@@ -274,10 +277,7 @@ export default function PdfFlipBookReal() {
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          Outer Wear Profile
-        </h2>
-        <p className="text-gray-600">Interactive Flip Book Reader</p>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">{title}</h2>
       </motion.div>
 
       {error && (

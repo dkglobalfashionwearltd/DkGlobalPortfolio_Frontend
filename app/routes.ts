@@ -17,5 +17,8 @@ export default [
     route("career", "routes/career.tsx"),
     route("upper-outwears", "routes/products/upper-outwear.tsx"),
     route("lower-outwears", "routes/products/lower-outwear.tsx"),
+    route("outerwears", "routes/outerwear.tsx"),
+    route("workwears", "routes/workwear.tsx"),
+    route("fashionwears", "routes/fashionwear.tsx"),
   ]),
 ] satisfies RouteConfig;

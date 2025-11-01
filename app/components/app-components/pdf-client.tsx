@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 
 // Lazy load your real viewer only in browser
-export default function PdfFlipBookClient() {
-  const [ClientComponent, setClientComponent] = useState<React.FC | null>(null);
+export default function PdfFlipBookClient({
+  pdfUrl1,
+  title,
+}: {
+  pdfUrl1: string;
+  title: string;
+}) {
+  // const [ClientComponent, setClientComponent] = useState<React.FC | null>(null);
+  const [ClientComponent, setClientComponent] = useState<React.FC<{
+    pdfUrl1: string;
+    title: string;
+  }> | null>(null);
 
   useEffect(() => {
     // Run only on browser
@@ -24,5 +34,5 @@ export default function PdfFlipBookClient() {
   }
 
   const Comp = ClientComponent;
-  return <Comp />;
+  return <Comp pdfUrl1={pdfUrl1} title={title} />;
 }
