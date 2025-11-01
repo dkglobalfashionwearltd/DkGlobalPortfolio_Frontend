@@ -11,8 +11,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import ImageGallery from "~/components/app-components/image-gallery";
 import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 import { Skeleton } from "~/components/ui/skeleton";
-import PdfFlipBook from "~/components/app-components/pdf-reader";
-import PdfFlipBookClient from "~/components/app-components/PdfFlipBook";
+import PdfFlipBookClient from "~/components/app-components/pdf-client";
+
+interface RouteParams {
+  pdfUrl?: string;
+}
 
 const Company = () => {
   const dispatch = useAppDispatch();
@@ -64,6 +67,16 @@ const Company = () => {
       value: `${data?.result?.primaryMarkets}`,
     },
   ];
+
+  const handleDocumentLoad = (document: any) => {
+    console.log("PDF loaded with", document.numPages, "pages");
+  };
+
+  const handlePageChange = (page: number) => {
+    console.log("Current page:", page);
+  };
+
+  const pdfUrl = "F:\Projects\Dk_global\public\fire-report.pdf";
 
   return (
     <div>
@@ -183,8 +196,9 @@ const Company = () => {
         <TeamSummary />
       </div>
       {/* pdf */}
-      <PdfFlipBookClient />
-      <PdfFlipBook fileUrl="https://localhost:7274/profile-images/4f89c91b-f4e6-46c4-b0e6-2013dd24edc5.pdf" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <PdfFlipBookClient />
+      </div>
     </div>
   );
 };
