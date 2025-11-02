@@ -144,7 +144,9 @@ const ImageGallery: React.FC = () => {
         </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10 gap-6">
+        <div
+          className={`${selectedImage ? "blur-2xl" : ""} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10 gap-6`}
+        >
           {images.slice(0, 4).map((image, index) => (
             <div
               key={image.id}
@@ -187,7 +189,7 @@ const ImageGallery: React.FC = () => {
 
         {/* Modal */}
         {selectedImage && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-transparent bg-opacity-90 flex items-center justify-center z-50 p-4">
             {/* Close Button */}
             <button
               onClick={closeModal}
@@ -255,24 +257,16 @@ const ImageGallery: React.FC = () => {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="max-w-full max-h-[90vh] object-contain rounded-lg"
+                className="max-w-full max-h-[60vh] object-contain rounded-lg"
                 style={{
                   animation: "fadeIn 0.5s ease-out",
                 }}
                 onError={handleImageError}
               />
-
-              {/* Image Info */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-50 text-white p-4 rounded-lg backdrop-blur-sm">
-                <p className="text-lg font-semibold">{selectedImage.alt}</p>
-                <p className="text-sm opacity-80">
-                  Image {currentIndex + 1} of {images.length}
-                </p>
-              </div>
             </div>
 
             {/* Thumbnail Strip */}
-            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-full overflow-x-auto py-2 px-4">
+            <div className="absolute -bottom-28 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-full overflow-x-auto py-2 px-4">
               {images.map((image, index) => (
                 <button
                   key={image.id}

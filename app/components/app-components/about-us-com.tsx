@@ -1,15 +1,13 @@
 // AboutUs.tsx - DK Global Fashion Wear Ltd.
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
-
-// Types
-interface TeamMember {
-  id: number;
-  name: string;
-  role: string;
-  bio: string;
-  image: string;
-}
+import { getCompanyInfo } from "~/redux/features/companyInfoSlice";
+import { getProfileImages } from "~/redux/features/ProfileImageSlice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { Spinner } from "../ui/spinner";
+import TeamSummary from "./TeamSummary";
+import ClientSlider from "./ClientSlider";
+import ImageGallery from "./image-gallery";
 
 interface Testimonial {
   id: number;
@@ -30,48 +28,60 @@ interface ProductCategory {
 const AboutUs = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dispatch = useAppDispatch();
+  const { loading, data, refresh } = useAppSelector(
+    (state) => state.companyInfo
+  );
+  const {
+    loading: pro_loading,
+    data: pro_data,
+    refresh: pro_refresh,
+  } = useAppSelector((state) => state.profile_images);
+  const token = "";
+  const id = 1;
+  const ProId = 1;
+
+  useEffect(() => {
+    dispatch(getCompanyInfo({ token, id }));
+    dispatch(getProfileImages({ token, id: ProId }));
+  }, []);
+
+  const formatNumber = (number: number | 0) => {
+    return new Intl.NumberFormat("en-US").format(number);
+  };
 
   // Company statistics
   const companyStats = [
-    { number: "15+", label: "Years Experience", color: "text-pink-600" },
-    { number: "50+", label: "Countries Served", color: "text-blue-600" },
-    { number: "500K+", label: "Garments Monthly", color: "text-green-600" },
+    { number: "10+", label: "Years Experience", color: "text-pink-600" },
+    { number: "10+", label: "Countries Served", color: "text-blue-600" },
+    { number: "300K+", label: "Garments Monthly", color: "text-green-600" },
     { number: "98%", label: "Client Satisfaction", color: "text-purple-600" },
   ];
-
-  // Team data - Fashion industry roles
-  const teamMembers: TeamMember[] = [
+  const stats = [
     {
       id: 1,
-      name: "David Khan",
-      role: "Founder & CEO",
-      bio: "25+ years in fashion manufacturing",
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
+      name: "Annual Turnover",
+      value: `USD ${formatNumber(data?.result?.annualTurnover ?? 0)} Million`,
     },
     {
       id: 2,
-      name: "Sophia Chen",
-      role: "Creative Director",
-      bio: "Former Paris Fashion Week designer",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
+      name: "Production Capacity",
+      value: `${formatNumber(data?.result?.productionCapacity ?? 0)} Pcs/Per Month`,
     },
     {
       id: 3,
-      name: "Marcus Rodriguez",
-      role: "Production Head",
-      bio: "Supply chain and manufacturing expert",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+      name: "State of art production facilities",
+      value: "1 Sewing Plants",
     },
     {
       id: 4,
-      name: "Aisha Patel",
-      role: "Quality Control Manager",
-      bio: "15 years ensuring premium quality standards",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+      name: "Number of Employees",
+      value: `${formatNumber(data?.result?.numberOfEmployees ?? 0)} (Current)`,
+    },
+    {
+      id: 5,
+      name: "Primary Markets",
+      value: `${data?.result?.primaryMarkets}`,
     },
   ];
 
@@ -80,7 +90,7 @@ const AboutUs = () => {
     {
       id: 1,
       name: "Elena Rodriguez",
-      company: "Style Boutique Chain",
+      company: "Killtech",
       text: "DK Global delivers exceptional quality and timely delivery. Their attention to detail is remarkable!",
       avatar:
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
@@ -88,7 +98,7 @@ const AboutUs = () => {
     {
       id: 2,
       name: "James Wilson",
-      company: "Urban Trend Apparel",
+      company: "Kapriol",
       text: "The consistency in quality and their innovative designs have helped us grow our brand significantly.",
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
@@ -96,7 +106,7 @@ const AboutUs = () => {
     {
       id: 3,
       name: "Sarah Kim",
-      company: "Eco Fashion Co.",
+      company: "Pinewood",
       text: "Their sustainable manufacturing practices align perfectly with our brand values. Highly recommended!",
       avatar:
         "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face",
@@ -110,24 +120,21 @@ const AboutUs = () => {
       name: "Outer Wear",
       description: "Everyday comfortable fashion",
       link: "/outerwears",
-      image:
-        "https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=500&h=400&fit=crop",
+      image: "images/image2.png",
     },
     {
       id: 2,
       name: "Work Wear",
       description: "Premium business and formal wear",
       link: "/workwears",
-      image:
-        "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&h=400&fit=crop",
+      image: "images/image1.png",
     },
     {
       id: 3,
       name: "Fashion Wear",
       description: "Performance and athletic clothing",
       link: "/fashionwears",
-      image:
-        "https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?w=500&h=400&fit=crop",
+      image: "images/denim.jpg",
     },
   ];
 
@@ -208,8 +215,7 @@ const AboutUs = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110 transition-transform duration-10000 hover:scale-100"
           style={{
-            backgroundImage:
-              'url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop")',
+            backgroundImage: 'url("images/profile.jpg")',
           }}
         ></div>
 
@@ -220,23 +226,21 @@ const AboutUs = () => {
             </h1>
             <div className="w-24 h-1 bg-pink-400 mx-auto mb-6"></div>
           </div>
-          <p className="text-xl md:text-2xl mb-8 animate-fade-in-up animation-delay-300">
-            Crafting Premium Fashion Since 2008
-          </p>
+
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-500">
             Leading garment manufacturer delivering quality fashion worldwide
             with sustainable practices and innovative designs
           </p>
           <div className="animate-fade-in-up animation-delay-700">
             <Link
-              to="/contact"
-              className="inline-block bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl mr-4"
+              to="/contact-us"
+              className="inline-block bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl mr-0 sm:mr-4"
             >
               Request Catalog
             </Link>
             <Link
-              to="/collections"
-              className="inline-block border-2 border-white hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300"
+              to="/product-category"
+              className="max-sm:mt-2 inline-block border-2 border-white hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300"
             >
               View Collections
             </Link>
@@ -255,19 +259,31 @@ const AboutUs = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                Our Fashion <span className="text-pink-600">Journey</span>
+                Our Fashion <span className="text-indigo-600">Journey</span>
               </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Founded in 2008, DK Global Fashion Wear Ltd. has grown from a
-                small local workshop to an international garment manufacturing
-                powerhouse. Our commitment to quality, innovation, and
-                sustainable practices has made us a trusted partner for fashion
-                brands worldwide.
-              </p>
+              <div className="mt-5">
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <p
+                    className="text-gray-700 leading-relaxed text-justify whitespace-pre-line"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        data?.result?.description
+                          ?.replaceAll(". ", ".<br>")
+                          ?.replaceAll(
+                            "DK GLOBAL FASHION WEAR",
+                            "<span class='font-semibold text-pink-600'>DK GLOBAL FASHION WEAR</span>"
+                          ) ??
+                        "<span class='font-semibold text-indigo-600'>Data Not Found</span>",
+                    }}
+                  ></p>
+                )}
+              </div>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 We specialize in creating premium apparel across all categories,
-                from casual wear to formal attire, always staying ahead of
-                fashion trends while maintaining the highest quality standards.
+                always staying ahead of fashion trends while maintaining the
+                highest quality standards.
               </p>
 
               {/* Stats Grid */}
@@ -289,35 +305,41 @@ const AboutUs = () => {
             </div>
 
             <div className="relative">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
+              <div className="grid gap-4">
+                <div className="space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <img
-                    src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop"
+                    src="images/tracking-pant.jpg"
                     alt="Manufacturing Facility"
                     className="rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
                   />
                   <img
-                    src="https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=400&h=300&fit=crop"
+                    src="images/tracking-jacket.jpg"
                     alt="Quality Control"
                     className="rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="space-y-4 mt-8">
-                  <img
-                    src="https://images.unsplash.com/photo-1523381294917-8b0c76d23881?w=400&h=300&fit=crop"
-                    alt="Fabric Selection"
-                    className="rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
-                  />
-                  <img
-                    src="https://images.unsplash.com/photo-1558769132-cb2f9f4bd894?w=400&h=300&fit=crop"
-                    alt="Finished Products"
-                    className="rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+              </div>
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                {stats.map((stat, index) => (
+                  <div
+                    key={index}
+                    className="text-center p-4 bg-gray-50 rounded-lg transform hover:scale-105 transition-all duration-300"
+                  >
+                    <div className={`text-2xl font-bold mb-2`}>
+                      {stat.value}
+                    </div>
+                    <div className="text-gray-600 font-medium">{stat.name}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
+      </section>
+      {/* image gallary */}
+      <section ref={addToRefs}>
+        <ImageGallery />
       </section>
 
       {/* Manufacturing Process Section */}
@@ -365,66 +387,39 @@ const AboutUs = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productCategories.map((category) => (
-              <div
-                key={category.id}
-                className="group relative overflow-hidden rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-500 cursor-pointer"
-              >
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-start p-6">
-                  <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
-                    <p className="text-gray-200">{category.description}</p>
+              <Link to={category.link} key={category.id}>
+                <div
+                  key={category.id}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-start p-6">
+                    <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <h3 className="text-2xl font-bold mb-2 ">
+                        {category.name}
+                      </h3>
+                      <p className="text-gray-200">{category.description}</p>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-6 left-6 text-white ">
+                    <h3 className="text-2xl font-bold group-hover:hidden">
+                      {category.name}
+                    </h3>
                   </div>
                 </div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold">{category.name}</h3>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section ref={addToRefs} className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
-            Fashion <span className="text-pink-600">Leadership</span>
-          </h2>
-          <p className="text-xl text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Meet the visionaries shaping global fashion trends
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member) => (
-              <div
-                key={member.id}
-                className="group text-center transform hover:scale-105 transition-all duration-500"
-              >
-                <div className="relative overflow-hidden rounded-2xl mb-4 shadow-lg">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-80 object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-6">
-                    <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <p className="text-sm">{member.bio}</p>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800">
-                  {member.name}
-                </h3>
-                <p className="text-pink-600 font-medium">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section ref={addToRefs} className="">
+        <TeamSummary />
       </section>
 
       {/* Sustainability Section */}
@@ -475,7 +470,7 @@ const AboutUs = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&h=500&fit=crop"
+                src="images/complience.png"
                 alt="Sustainable Manufacturing"
                 className="rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-500"
               />
@@ -489,6 +484,9 @@ const AboutUs = () => {
       </section>
 
       {/* Testimonials Section */}
+      <section ref={addToRefs}>
+        <ClientSlider />
+      </section>
       <section
         ref={addToRefs}
         className="py-20 px-4 bg-gradient-to-br from-pink-50 to-purple-100"
@@ -553,16 +551,10 @@ const AboutUs = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
+              to="/contact-us"
               className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300"
             >
               Start Your Project
-            </Link>
-            <Link
-              to="/catalog"
-              className="border border-white hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300"
-            >
-              Download Catalog
             </Link>
           </div>
         </div>

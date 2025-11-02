@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Separator } from "../ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { GiBoxCutter, GiClothes, GiSewingNeedle } from "react-icons/gi";
@@ -12,12 +12,9 @@ import { FaTruckPlane } from "react-icons/fa6";
 const ServiceSummary2 = () => {
   const dispatch = useAppDispatch();
   const { loading, data } = useAppSelector((state) => state.profile_images);
-  const token = "";
-  const id = 1;
-  const ProId = 1;
 
   useEffect(() => {
-    dispatch(getProfileImages({ token, id: ProId }));
+    dispatch(getProfileImages({ token: "", id: 1 }));
   }, []);
 
   const about = [
@@ -93,13 +90,18 @@ const ServiceSummary2 = () => {
             complete apparel manufacturing solutions with a commitment to
             quality, ethics, and sustainability.
           </p>
-          <div className="flex gap-5 items-center">
+          <div className="flex gap-5 items-center group">
             <Link
               to="/about-us"
-              className="text-sm/6 font-semibold text-red-600"
+              className="text-sm/6 font-semibold text-red-600 transition-all inline-flex gap-1 duration-300 group-hover:gap-1"
             >
               Learn more
-              <span aria-hidden="true">→</span>
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
             </Link>
           </div>
         </div>

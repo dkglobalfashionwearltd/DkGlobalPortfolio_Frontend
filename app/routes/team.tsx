@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import PersonCardSkeleton from "~/components/app-components/person-card-skeleton";
 import { getAllLeadership } from "~/redux/features/leadershipSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { motion } from "motion/react";
 
 const Team = () => {
   const dispatch = useAppDispatch();
@@ -27,11 +28,15 @@ const Team = () => {
               key={person.id}
               className="flex flex-col items-start gap-5 max-sm:mb-5"
             >
-              <img
-                alt="image"
-                src={person?.imageUrl ?? "image-place.avif"}
-                className="w-[30rem] h-[15rem] object-cover rounded-xl border-1"
-              />
+              <div className="w-full relative overflow-hidden rounded-xl border">
+                <motion.img
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.4 }}
+                  alt="image"
+                  src={person?.imageUrl ?? "image-place.avif"}
+                  className="w-[30rem] h-[15rem] object-cover rounded-xl"
+                />
+              </div>
               <div>
                 <h1 className="text-xl font-semibold tracking-tight text-gray-900">
                   {person?.name ?? "Name"}

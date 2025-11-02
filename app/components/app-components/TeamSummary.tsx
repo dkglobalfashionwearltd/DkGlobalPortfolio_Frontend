@@ -4,14 +4,15 @@ import { Link } from "react-router";
 import { getAllLeadership } from "~/redux/features/leadershipSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
 import PersonCardSkeleton from "./person-card-skeleton";
+import { motion } from "motion/react";
+import { useInView } from "../hook/useInView";
 
 export default function TeamSummary() {
   const dispatch = useAppDispatch();
   const { loading, data, refresh } = useAppSelector((state) => state.leader);
-  const token = "d";
 
   useEffect(() => {
-    dispatch(getAllLeadership({ token }));
+    dispatch(getAllLeadership({ token: "" }));
   }, []);
   return (
     <div className="bg-gray-100 py-20 sm:py-24">
@@ -24,10 +25,18 @@ export default function TeamSummary() {
             We’re a dynamic group of individuals who are passionate about what
             we do and dedicated to delivering the best results for our clients.
           </p>
-          <div className="mt-5">
-            <Link to="/teams" className="text-sm/6 font-semibold text-red-600">
+          <div className="mt-5 group">
+            <Link
+              to="/teams"
+              className="text-sm/6 font-semibold text-red-600 transition-all inline-flex gap-1 duration-300 group-hover:gap-1"
+            >
               See more
-              <span aria-hidden="true">→</span>
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
             </Link>
           </div>
         </div>
@@ -41,11 +50,15 @@ export default function TeamSummary() {
             data?.result?.slice(0, 2)?.map((person) => (
               <li key={person.id}>
                 <div className="flex flex-col items-start gap-5 max-sm:mb-5">
-                  <img
-                    alt="image"
-                    src={person?.imageUrl ?? "image-place.avif"}
-                    className="w-full h-[15rem] object-cover rounded-xl border-1"
-                  />
+                  <div className="w-full relative overflow-hidden rounded-xl border border-gray-200">
+                    <motion.img
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.4 }}
+                      alt="image"
+                      src={person?.imageUrl ?? "image-place.avif"}
+                      className="w-full h-[15rem] object-cover rounded-xl"
+                    />
+                  </div>
                   <div>
                     <h1 className="text-xl font-semibold tracking-tight text-gray-900">
                       {person?.name ?? "Name"}

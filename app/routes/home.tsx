@@ -1,49 +1,250 @@
-import { useEffect, useState } from "react";
-import { isRouteErrorResponse, useParams } from "react-router";
+// import { motion, type Variants } from "motion/react";
+// import { isRouteErrorResponse } from "react-router";
+// import BlogSummary from "~/components/app-components/BlogSummary";
+// import ErrorPage from "~/components/app-components/ErrorPage";
+// import TeamSummary from "~/components/app-components/TeamSummary";
+// import ImageSlider from "~/components/image-slider/image-slider";
+// import type { Route } from "./+types/home";
+// import ClientSlider from "~/components/app-components/ClientSlider";
+// import ServiceSummary2 from "~/components/app-components/service-summary-2";
+// import CertificateSummary from "~/components/app-components/certificate-summary";
+// import { useInView } from "~/components/hook/useInView";
+
+// const fadeUpVariants: Variants = {
+//   hidden: { opacity: 0, y: 50 },
+//   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+// };
+
+// const Home = () => {
+//   // Each section gets its own ref + visibility state
+//   const serviceRef = useInView<HTMLElement>({ threshold: 0.2 });
+//   const certificateRef = useInView<HTMLElement>({ threshold: 0.2 });
+//   const blogRef = useInView<HTMLElement>({ threshold: 0.2 });
+//   const teamRef = useInView<HTMLElement>({ threshold: 0.2 });
+//   const clientRef = useInView<HTMLElement>({ threshold: 0.2 });
+
+//   return (
+//     <div>
+//       {/* image slider (always visible, no animation) */}
+//       <section>
+//         <ImageSlider />
+//       </section>
+
+//       {/* service summary */}
+//       <motion.section
+//         ref={serviceRef.ref}
+//         variants={fadeUpVariants}
+//         initial="hidden"
+//         animate={serviceRef.isInView ? "visible" : "hidden"}
+//       >
+//         <ServiceSummary2 />
+//       </motion.section>
+
+//       {/* certificate summary */}
+//       <motion.section
+//         ref={certificateRef.ref}
+//         variants={fadeUpVariants}
+//         initial="hidden"
+//         animate={certificateRef.isInView ? "visible" : "hidden"}
+//       >
+//         <CertificateSummary />
+//       </motion.section>
+
+//       {/* blog section */}
+//       <motion.section
+//         ref={blogRef.ref}
+//         variants={fadeUpVariants}
+//         initial="hidden"
+//         animate={blogRef.isInView ? "visible" : "hidden"}
+//       >
+//         <BlogSummary />
+//       </motion.section>
+
+//       {/* team section */}
+//       <motion.section
+//         ref={teamRef.ref}
+//         variants={fadeUpVariants}
+//         initial="hidden"
+//         animate={teamRef.isInView ? "visible" : "hidden"}
+//       >
+//         <TeamSummary />
+//       </motion.section>
+
+//       {/* client section */}
+//       <motion.section
+//         ref={clientRef.ref}
+//         variants={fadeUpVariants}
+//         initial="hidden"
+//         animate={clientRef.isInView ? "visible" : "hidden"}
+//       >
+//         <ClientSlider />
+//       </motion.section>
+//     </div>
+//   );
+// };
+
+// export default Home;
+
+// export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+//   let status: number | undefined;
+//   let title = "Oops!";
+//   let message = "An unexpected error occurred.";
+//   let stack: string | undefined;
+
+//   if (isRouteErrorResponse(error)) {
+//     status = error.status;
+//     title = error.status === 404 ? "404" : `Error ${error.status}`;
+//     message =
+//       error.status === 404
+//         ? "The requested page could not be found."
+//         : error.statusText || message;
+//   } else if (import.meta.env.DEV && error instanceof Error) {
+//     message = error.message;
+//     stack = error.stack;
+//   }
+
+//   return (
+//     <ErrorPage status={status} title={title} message={message} stack={stack} />
+//   );
+// }
+
+import { motion, type Variants } from "motion/react";
+import { isRouteErrorResponse } from "react-router";
 import BlogSummary from "~/components/app-components/BlogSummary";
 import ErrorPage from "~/components/app-components/ErrorPage";
-import ServiceSummary from "~/components/app-components/ServiceSummary";
 import TeamSummary from "~/components/app-components/TeamSummary";
-import WorkSummary from "~/components/app-components/WorkSummary";
 import ImageSlider from "~/components/image-slider/image-slider";
 import type { Route } from "./+types/home";
 import ClientSlider from "~/components/app-components/ClientSlider";
 import ServiceSummary2 from "~/components/app-components/service-summary-2";
 import CertificateSummary from "~/components/app-components/certificate-summary";
+import { useInView } from "~/components/hook/useInView";
+import { useEffect, useState } from "react";
+
+/* --------------------------- Responsive animation --------------------------- */
+// Adjust animation based on screen width (mobile vs desktop)
+const useResponsiveVariants = (): Variants => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return {
+    hidden: {
+      opacity: 0,
+      y: isMobile ? 25 : 50,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.45 : 0.8,
+        ease: isMobile ? [0.4, 0.0, 0.2, 1] : "easeOut",
+      },
+    },
+  };
+};
+
+/* --------------------------- Main component --------------------------- */
 
 const Home = () => {
+  const fadeUpVariants = useResponsiveVariants();
+
+  // Each section gets its own ref + visibility state
+
+  const serviceRef = useInView<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: "0px 0px -10% 0px",
+    once: true,
+  });
+  const certificateRef = useInView<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: "0px 0px -10% 0px",
+    once: true,
+  });
+  const blogRef = useInView<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: "0px 0px -10% 0px",
+    once: true,
+  });
+  const teamRef = useInView<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: "0px 0px -10% 0px",
+    once: true,
+  });
+  const clientRef = useInView<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: "0px 0px -10% 0px",
+    once: true,
+  });
+
   return (
     <div>
-      {/* image slider */}
-      <div>
+      {/* image slider (no animation) */}
+      <section>
         <ImageSlider />
-      </div>
+      </section>
+
       {/* service summary */}
-      <div>
+      <motion.section
+        ref={serviceRef.ref}
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={serviceRef.isInView ? "visible" : "hidden"}
+      >
         <ServiceSummary2 />
-      </div>
-      {/* work summary */}
-      <div>
+      </motion.section>
+
+      {/* certificate summary */}
+      <motion.section
+        ref={certificateRef.ref}
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={certificateRef.isInView ? "visible" : "hidden"}
+      >
         <CertificateSummary />
-      </div>
+      </motion.section>
+
       {/* blog section */}
-      <div>
+      <motion.section
+        ref={blogRef.ref}
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={blogRef.isInView ? "visible" : "hidden"}
+      >
         <BlogSummary />
-      </div>
+      </motion.section>
+
       {/* team section */}
-      <div>
+      <motion.section
+        ref={teamRef.ref}
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={teamRef.isInView ? "visible" : "hidden"}
+      >
         <TeamSummary />
-      </div>
+      </motion.section>
+
       {/* client section */}
-      <div>
+      <motion.section
+        ref={clientRef.ref}
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={clientRef.isInView ? "visible" : "hidden"}
+      >
         <ClientSlider />
-      </div>
+      </motion.section>
     </div>
   );
 };
 
 export default Home;
 
+/* --------------------------- Error Boundary --------------------------- */
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let status: number | undefined;
   let title = "Oops!";
