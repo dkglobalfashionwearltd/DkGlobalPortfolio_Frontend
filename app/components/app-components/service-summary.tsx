@@ -9,7 +9,7 @@ import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 import { Leaf } from "lucide-react";
 import { FaTruckPlane } from "react-icons/fa6";
 
-const ServiceSummary2 = () => {
+const ServiceSummary = () => {
   const dispatch = useAppDispatch();
   const { loading, data } = useAppSelector((state) => state.profile_images);
 
@@ -135,4 +135,4 @@ const ServiceSummary2 = () => {
   );
 };
 
-export default ServiceSummary2;
+export default ServiceSummary;

@@ -19,30 +19,33 @@ export default function ErrorPage({
 
   return (
     <main
-      className={`grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8 ${
-        is404 ? "bg-gray-900" : "container mx-auto pt-16"
+      className={`min-h-screen flex flex-col justify-center items-center px-4 py-12 sm:py-16 ${
+        is404 ? "bg-gray-900" : "bg-white"
       }`}
     >
-      <div className="text-center">
+      <div className="w-full flex flex-col items-center text-center">
+        {/* Status code */}
         <p
-          className={`text-base font-semibold ${
+          className={`text-base font-semibold break-words ${
             is404 ? "text-indigo-400" : "text-red-500"
           }`}
         >
           {is404 ? "404" : status || "Error"}
         </p>
+
+        {/* Title */}
         <h1
-          className={`mt-4 text-5xl font-semibold tracking-tight ${
-            is404
-              ? "text-balance text-white sm:text-7xl"
-              : "text-red-600 sm:text-6xl"
+          className={`mt-2 font-bold tracking-tight text-3xl sm:text-4xl md:text-5xl text-center break-words ${
+            is404 ? "text-white" : "text-red-600"
           }`}
         >
           {title || (is404 ? "Page not found" : "Something went wrong")}
         </h1>
+
+        {/* Message */}
         <p
-          className={`mt-6 text-lg font-medium ${
-            is404 ? "text-pretty text-gray-400 sm:text-xl/8" : "text-gray-700"
+          className={`mt-3 text-sm sm:text-base md:text-lg text-center break-words whitespace-pre-wrap ${
+            is404 ? "text-gray-400" : "text-gray-700"
           }`}
         >
           {message ||
@@ -51,22 +54,27 @@ export default function ErrorPage({
               : "An unexpected error occurred.")}
         </p>
 
+        {/* Actions */}
         {is404 && showActions && (
-          <div className="mt-10 flex items-center justify-center gap-x-6">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-full">
             <a
               href="/"
-              className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              className="flex-1 sm:flex-none w-full sm:w-auto text-center rounded-md bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Go back home
             </a>
-            <a href="/support" className="text-sm font-semibold text-white">
+            <a
+              href="/support"
+              className="flex-1 sm:flex-none w-full sm:w-auto text-center text-sm font-semibold text-white hover:underline"
+            >
               Contact support <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         )}
 
+        {/* Stack trace */}
         {!is404 && stack && (
-          <pre className="w-full mt-4 p-4 overflow-x-auto rounded bg-gray-100 text-sm text-red-600">
+          <pre className="w-full mt-6 p-3 overflow-x-auto rounded bg-gray-100 text-xs sm:text-sm text-red-600 break-words whitespace-pre-wrap">
             <code>{stack}</code>
           </pre>
         )}

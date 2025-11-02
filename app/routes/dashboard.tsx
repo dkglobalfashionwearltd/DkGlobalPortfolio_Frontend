@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, Outlet } from "react-router";
 import ErrorPage from "~/components/app-components/ErrorPage";
 import Footer from "~/components/app-components/Footer";
-import Header2 from "~/components/app-components/Header2";
+import Header from "~/components/app-components/Header";
 import Topbar from "~/components/app-components/Topbar";
 import type { Route } from "./+types/dashboard";
 
@@ -9,7 +9,7 @@ export default function Dashboard() {
   return (
     <div>
       <Topbar />
-      <Header2 />
+      <Header />
       <main>
         <div>
           <Outlet />

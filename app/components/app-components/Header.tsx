@@ -1,187 +1,320 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
+  Dialog,
+  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuItem,
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router"; // keep whatever Link import you already use
+import * as Icons from "@heroicons/react/24/outline";
+import * as Icons2 from "react-icons/pi";
 
-const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Company Profile", href: "/company-profile", current: false },
-  {
-    name: "Audit Reports",
-    href: "/audit-reports",
-    current: false,
-    items: [
-      { name: "RSC Reports", href: "/rsc-reports", current: false },
-      { name: "Sales Reports", href: "/sales-reports", current: false },
-    ],
-  },
-  { name: "Product", href: "/products", current: false },
-  { name: "Contact Us", href: "/contact-us", current: false },
-];
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router";
+import clsx from "clsx";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { getAllReportCategory } from "~/redux/features/reportSlice";
+import { getAllProductCategory } from "~/redux/features/productSlice";
+import { SkeletonCategoryItem } from "./category-skeleton";
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [bounced, setBounced] = useState(false);
+  const [hasBounced, setHasBounced] = useState(false);
+  const dispatch = useAppDispatch();
+  const { loading, categoryData } = useAppSelector((state) => state.report);
+  const { loading: pLoading, categoryData: pCategory } = useAppSelector(
+    (state) => state.product
+  );
+  const token = "";
 
-export default function Header({ children }: any) {
+  const getIcon = (name: string): React.ElementType => {
+    return (
+      (Icons as Record<string, React.ElementType>)[name] ||
+      Icons.QuestionMarkCircleIcon
+    );
+  };
+  const getIcon2 = (name: string): React.ElementType => {
+    return (
+      (Icons2 as Record<string, React.ElementType>)[name] || Icons2.PiQuestion
+    );
+  };
+
+  useEffect(() => {
+    dispatch(getAllReportCategory({ token }));
+    dispatch(getAllProductCategory({ token }));
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20 && !hasBounced) {
+        setScrolled(true);
+        setBounced(true);
+        setHasBounced(true);
+
+        setTimeout(() => {
+          setBounced(false);
+        }, 300);
+      }
+
+      if (window.scrollY <= 10) {
+        setScrolled(false);
+        setHasBounced(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasBounced]);
+
   return (
-    <Disclosure as="nav" className="relative bg-white shadow-sm">
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              {/* Mobile menu button (left) */}
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <DisclosureButton className="group inline-flex items-center justify-center rounded-md p-2 text-black hover:bg-gray-100 focus:outline-none">
-                  <span className="sr-only">Open main menu</span>
-                  <Bars3Icon
-                    className={classNames(open ? "hidden" : "block", "h-6 w-6")}
-                    aria-hidden="true"
-                  />
-                  <XMarkIcon
-                    className={classNames(open ? "block" : "hidden", "h-6 w-6")}
-                    aria-hidden="true"
-                  />
-                </DisclosureButton>
-              </div>
+    <header
+      className={clsx(
+        "w-full p-0 px-4 md:px-10 sticky top-0 z-50 transition-all duration-500 text-black",
+        scrolled ? "bg-white shadow-lg" : "bg-white",
+        bounced ? "-translate-y-[30px]" : "translate-y-0"
+      )}
+    >
+      <nav
+        aria-label="Global"
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+      >
+        <div className="flex lg:flex-1">
+          <Link to="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">Dk Global Fashion Wear Ltd.</span>
+            <img alt="" src="/dkgloballogorb.png" className="h-8 w-auto" />
+          </Link>
+        </div>
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-900"
+          >
+            <span className="sr-only">Open main menu</span>
+            <Bars3Icon aria-hidden="true" className="size-6" />
+          </button>
+        </div>
+        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+          <Link to="/" className="text-sm/6 font-semibold">
+            Home
+          </Link>
+          {/* reports */}
+          <Popover className="relative">
+            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold outline-0">
+              Reports
+              <ChevronDownIcon
+                aria-hidden="true"
+                className="size-5 flex-none text-gray-500"
+              />
+            </PopoverButton>
 
-              {/* Logo */}
-              <div className="flex flex-1 items-center justify-end sm:items-stretch sm:justify-start">
-                <Link to={"/"} className="flex shrink-0 items-center">
-                  <img
-                    alt="DK Global Fasion Wear Ltd"
-                    src="/dkgloballogorb.png"
-                    className="h-8 w-auto"
-                  />
-                </Link>
-              </div>
-
-              {/* Desktop navigation (right) */}
-              <div className="hidden sm:flex sm:items-center sm:space-x-2">
-                <div className="flex space-x-4">
-                  {navigation.map((item) =>
-                    item.items ? (
-                      // Wrap each dropdown in a relative container so MenuItems position under the trigger
-                      <div key={item.name} className="relative inline-block">
-                        <Menu>
-                          <MenuButton
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-black hover:bg-gray-100 hover:text-black",
-                              "rounded-md px-3 py-2 text-sm font-medium inline-flex items-center"
-                            )}
-                          >
-                            <span>{item.name}</span>
-                            <svg
-                              className="ml-2 h-4 w-4"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                              aria-hidden="true"
-                            >
-                              <path
-                                d="M6 8l4 4 4-4"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </MenuButton>
-
-                          <MenuItems className="absolute left-0 mt-2 w-44 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-100 ring-opacity-5 focus:outline-none z-50">
-                            <div className="py-1">
-                              {item.items.map((sub) => (
-                                <MenuItem key={sub.name}>
-                                  {({ active }) => (
-                                    <Link
-                                      to={sub.href}
-                                      className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm text-gray-700"
-                                      )}
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  )}
-                                </MenuItem>
-                              ))}
-                            </div>
-                          </MenuItems>
-                        </Menu>
-                      </div>
-                    ) : (
-                      <Link
+            <PopoverPanel
+              transition
+              className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+            >
+              <div className="p-4 max-h-[12.5rem] overflow-auto">
+                {loading || !categoryData?.result ? (
+                  <SkeletonCategoryItem />
+                ) : (
+                  categoryData?.result?.map((item) => {
+                    const Icon = getIcon(item.icon);
+                    return (
+                      <div
                         key={item.name}
-                        to={item.href}
-                        aria-current={item.current ? "page" : undefined}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-black hover:bg-gray-100 hover:text-black",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
+                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
+                      >
+                        <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
+                          <Icon
+                            aria-hidden="true"
+                            className="size-6 text-gray-400 group-hover:text-white"
+                          />
+                        </div>
+                        <div className="flex-auto">
+                          <Link
+                            to={item.link}
+                            className="block font-semibold text-black"
+                          >
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                          <p className="mt-1 text-gray-500">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </PopoverPanel>
+          </Popover>
+          {/* products */}
+          <Popover className="relative">
+            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold outline-0">
+              Products
+              <ChevronDownIcon
+                aria-hidden="true"
+                className="size-5 flex-none text-gray-500"
+              />
+            </PopoverButton>
+
+            <PopoverPanel
+              transition
+              className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+            >
+              <div className="p-4 max-h-[12.5rem] overflow-auto">
+                {pLoading || !pCategory?.result ? (
+                  <SkeletonCategoryItem />
+                ) : (
+                  pCategory?.result?.map((item) => {
+                    const Icon = getIcon2(item.icon);
+                    return (
+                      <div
+                        key={item.name}
+                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
+                      >
+                        <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
+                          <Icon
+                            aria-hidden="true"
+                            className="size-6 text-gray-400 group-hover:text-white"
+                          />
+                        </div>
+                        <div className="flex-auto">
+                          <Link
+                            to={item.link}
+                            className="block font-semibold text-black"
+                          >
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                          <p className="mt-1 text-gray-500">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </PopoverPanel>
+          </Popover>
+
+          <Link to="/blogs" className="text-sm/6 font-semibold ">
+            Blogs
+          </Link>
+          <Link to="/about-us" className="text-sm/6 font-semibold ">
+            About Us
+          </Link>
+          <Link to="/contact-us" className="text-sm/6 font-semibold">
+            Contact Us
+          </Link>
+        </PopoverGroup>
+      </nav>
+      <Dialog
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+        className="lg:hidden"
+      >
+        <div className="fixed inset-0 z-50" />
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white text-black p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
+          <div className="flex items-center justify-between px-4 md:px-10">
+            <Link
+              to="/"
+              className="-m-1.5 p-1.5"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sr-only">Dk Global Fashion Wear Ltd.</span>
+              <img alt="" src="/dkgloballogorb.png" className="h-8 w-auto" />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(false)}
+              className="-m-2.5 rounded-md p-2.5 text-gray-900"
+            >
+              <span className="sr-only">Close menu</span>
+              <XMarkIcon aria-hidden="true" className="size-6" />
+            </button>
+          </div>
+          <div className="mt-6 flow-root">
+            <div className="-my-6 divide-y divide-white/40">
+              <div className="space-y-2 py-6">
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white/5"
+                >
+                  Home
+                </Link>
+                {/* reports */}
+                <Disclosure as="div" className="-mx-3">
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold hover:bg-white/5">
+                    Reports
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="size-5 flex-none group-data-open:rotate-180"
+                    />
+                  </DisclosureButton>
+                  <DisclosurePanel className="mt-2 space-y-2">
+                    {categoryData?.result?.map((item) => (
+                      <DisclosureButton
+                        key={item.name}
+                        as="a"
+                        href={item.link}
+                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold hover:bg-white/5"
                       >
                         {item.name}
-                      </Link>
-                    )
-                  )}
-                </div>
+                      </DisclosureButton>
+                    ))}
+                  </DisclosurePanel>
+                </Disclosure>
+                {/* products */}
+                <Disclosure as="div" className="-mx-3">
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold hover:bg-white/5">
+                    Products
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="size-5 flex-none group-data-open:rotate-180"
+                    />
+                  </DisclosureButton>
+                  <DisclosurePanel className="mt-2 space-y-2">
+                    {pCategory?.result?.map((item) => (
+                      <DisclosureButton
+                        key={item.name}
+                        as="a"
+                        href={item.link}
+                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold hover:bg-white/5"
+                      >
+                        {item.name}
+                      </DisclosureButton>
+                    ))}
+                  </DisclosurePanel>
+                </Disclosure>
+                <Link
+                  to="/about-us"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white/5"
+                >
+                  About Us
+                </Link>
+                <Link
+                  to="/contact-us"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white/5"
+                >
+                  Contact Us
+                </Link>
               </div>
             </div>
           </div>
-
-          {/* Mobile menu panel */}
-          <DisclosurePanel className="sm:hidden absolute top-16 left-0 right-0 z-50 bg-white shadow-md">
-            <div className="space-y-1 px-2 pt-2 pb-3">
-              {navigation.map((item) =>
-                item.items ? (
-                  <Disclosure as="div" key={item.name} className="mb-0">
-                    {({ open: subOpen }) => (
-                      <>
-                        <DisclosureButton className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-black hover:bg-gray-100">
-                          <span>{item.name}</span>
-                          <span className="ml-2">{subOpen ? "▲" : "▼"}</span>
-                        </DisclosureButton>
-                        <DisclosurePanel className="pl-6">
-                          {item.items.map((sub) => (
-                            <Link
-                              key={sub.name}
-                              to={sub.href}
-                              className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              {sub.name}
-                            </Link>
-                          ))}
-                        </DisclosurePanel>
-                      </>
-                    )}
-                  </Disclosure>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-black hover:bg-gray-100"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              )}
-            </div>
-          </DisclosurePanel>
-
-          {/* Page children/content */}
-          <div className="">{children}</div>
-        </>
-      )}
-    </Disclosure>
+        </DialogPanel>
+      </Dialog>
+    </header>
   );
 }

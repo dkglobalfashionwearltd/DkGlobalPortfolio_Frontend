@@ -15,8 +15,7 @@ const products = [
     imageSrc:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
     imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+    category: "outerwear",
   },
   {
     id: 2,
@@ -25,8 +24,7 @@ const products = [
     imageSrc:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
     imageAlt: "Front of men's Basic Tee in white.",
-    price: "$35",
-    color: "Aspen White",
+    category: "outerwear",
   },
   {
     id: 3,
@@ -35,8 +33,7 @@ const products = [
     imageSrc:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
     imageAlt: "Front of men's Basic Tee in dark gray.",
-    price: "$35",
-    color: "Charcoal",
+    category: "workwear",
   },
   {
     id: 4,
@@ -46,8 +43,27 @@ const products = [
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
     imageAlt:
       "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
-    price: "$35",
-    color: "Iso Dots",
+    category: "outerwear",
+  },
+  {
+    id: 5,
+    name: "Artwork Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    imageAlt:
+      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
+    category: "fashionwear",
+  },
+  {
+    id: 6,
+    name: "Artwork Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    imageAlt:
+      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
+    category: "fashionwear",
   },
 ];
 
@@ -79,9 +95,8 @@ const QuickViewModal = ({
           <DialogBackdrop className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
         </Transition.Child>
 
-        {/* Panel container */}
-        <div className="fixed inset-0 flex items-center justify-center sm:items-center sm:justify-center">
-          {/* Mobile drawer (bottom slide) */}
+        <div className="fixed inset-0 flex items-center justify-center sm:items-center sm:justify-center p-4">
+          {/* Mobile bottom drawer */}
           <Transition.Child
             as={Fragment}
             enter="transform transition ease-in-out duration-300"
@@ -91,31 +106,22 @@ const QuickViewModal = ({
             leaveFrom="translate-y-0"
             leaveTo="translate-y-full"
           >
-            <DialogPanel className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 shadow-lg sm:hidden">
+            <DialogPanel className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 shadow-lg sm:hidden max-h-[90vh] overflow-y-auto">
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
               >
                 <XMarkIcon className="w-6 h-6" />
               </button>
-              <div className="flex flex-col gap-4">
-                <img
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
-                  className="w-full h-56 rounded-md object-cover"
-                />
-                <h2 className="text-xl font-bold text-gray-900">
-                  {product.name}
-                </h2>
-                <p className="text-gray-600">{product.color}</p>
-                <p className="text-indigo-600 text-lg font-semibold">
-                  {product.price}
-                </p>
-              </div>
+              <img
+                src={product.imageSrc}
+                alt={product.imageAlt}
+                className="w-full rounded-md object-cover"
+              />
             </DialogPanel>
           </Transition.Child>
 
-          {/* Desktop modal (centered) */}
+          {/* Desktop centered modal */}
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-200"
@@ -125,28 +131,19 @@ const QuickViewModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <DialogPanel className="hidden sm:block relative bg-white rounded-lg p-6 shadow-xl w-full max-w-2xl">
+            <DialogPanel className="hidden sm:flex relative flex-col sm:flex-row bg-white rounded-lg p-6 shadow-xl w-full max-w-3xl sm:max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 z-10"
               >
                 <XMarkIcon className="w-6 h-6" />
               </button>
-              <div className="flex flex-col sm:flex-row gap-6">
+              <div className="flex-shrink-0 w-full">
                 <img
                   src={product.imageSrc}
                   alt={product.imageAlt}
-                  className="w-full sm:w-1/2 rounded-md object-cover"
+                  className="w-full h-full object-contain rounded-md"
                 />
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {product.name}
-                  </h2>
-                  <p className="text-lg text-gray-700 mt-2">{product.color}</p>
-                  <p className="text-xl font-semibold text-indigo-600 mt-4">
-                    {product.price}
-                  </p>
-                </div>
               </div>
             </DialogPanel>
           </Transition.Child>
