@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import images from "./images";
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
@@ -26,6 +25,8 @@ const ImageSlider = () => {
     item?.title?.toLowerCase().includes("slider")
   );
 
+  // console.log(filterImages);
+
   // ✅ Autoplay
   useEffect(() => {
     startAutoPlay();
@@ -49,11 +50,15 @@ const ImageSlider = () => {
 
   // ✅ Looping logic
   const slideNext = () => {
-    setActiveIndex((prev) => (prev + 1) % images.length);
+    if (!filterImages || filterImages.length === 0) return;
+    setActiveIndex((prev) => (prev + 1) % filterImages.length);
   };
 
   const slidePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+    if (!filterImages || filterImages.length === 0) return;
+    setActiveIndex(
+      (prev) => (prev - 1 + filterImages.length) % filterImages.length
+    );
   };
 
   // ✅ Swipe support
@@ -99,7 +104,7 @@ const ImageSlider = () => {
             <img
               src={item.imageUrl}
               alt={item.title}
-              className="w-full h-[300px] sm:h-[650px] xl:h-[750px] object-cover sm:object-bottom-left"
+              className="w-full h-[300px] sm:h-[750px] xl:h-[850px] object-cover sm:object-bottom-left"
             />
           </div>
         ))}

@@ -7,36 +7,20 @@ import { baseUrl } from "~/components/data";
 
 import { apiRequest } from "~/redux/data/GetData";
 
-export type CompanyInfo = {
+export type ClientTestimonial = {
   id: number;
   name: string;
-  quote: string;
-  shortTitle: string;
-  description: string;
-  email: string;
-  phoneNumber: string;
-  location: string;
-  mapLink: string;
-  secondMapLink: string;
-  facebookLink: string;
-  youtubeLink: string;
-  linkedInLink: string;
-  instagramLink: string;
-  twitterLink: string;
-  mission: string;
-  vision: string;
-  annualTurnover: number;
-  numberOfEmployees: number;
-  numberOfSewingPlants: number;
-  numberOfSewingLines: number;
-  productionCapacity: number;
-  primaryMarkets: string;
+  companyName: string;
+  message: string;
+  imageUrl: string;
+  reviewStars: number;
+  isActive: boolean;
 };
 interface Data {
   statusCode: number;
   success: boolean;
   message: string;
-  result: CompanyInfo;
+  result: ClientTestimonial[];
 }
 interface StateType {
   loading: boolean;
@@ -53,13 +37,13 @@ const initialState: StateType = {
   statusChange: false,
 };
 
-export const getAllCompanyInfo = createAsyncThunk(
-  "company-info/getAllCompanyInfo",
+export const getAllClientTestimonial = createAsyncThunk(
+  "client-testimonial/getAllClientTestimonial",
   async ({ token }: { token: string | null }, { rejectWithValue }) => {
     try {
       const res = await apiRequest(
         "get",
-        `${baseUrl}/api/company-info/getall`,
+        `${baseUrl}/api/client-testimonial/getall`,
         token,
         "application/json",
         {},
@@ -69,14 +53,15 @@ export const getAllCompanyInfo = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(
-        error?.response?.data?.message || "Failed to get leader data"
+        error?.response?.data?.message ||
+          "Failed to get client-testimonial data"
       );
     }
   }
 );
 
-export const getCompanyInfo = createAsyncThunk(
-  "company-info/getCompanyInfo",
+export const getClientTestimonial = createAsyncThunk(
+  "client-testimonial/getClientTestimonial",
   async (
     { token, id }: { token: string | null; id: number },
     { rejectWithValue }
@@ -84,7 +69,7 @@ export const getCompanyInfo = createAsyncThunk(
     try {
       const res = await apiRequest(
         "get",
-        `${baseUrl}/api/company-info/get`,
+        `${baseUrl}/api/client-testimonial/get`,
         token,
         "application/json",
         { id },
@@ -94,49 +79,50 @@ export const getCompanyInfo = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(
-        error?.response?.data?.message || "Failed to get leader data"
+        error?.response?.data?.message ||
+          "Failed to get client-testimonial data"
       );
     }
   }
 );
 
-const companyInfoSlice = createSlice({
-  name: "company-info",
+const clientTestimonialSlice = createSlice({
+  name: "client-testimonial",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllCompanyInfo.pending, (state) => {
+      .addCase(getAllClientTestimonial.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
-        getAllCompanyInfo.fulfilled,
+        getAllClientTestimonial.fulfilled,
         (state, action: PayloadAction<Data>) => {
           state.loading = false;
           state.data = action.payload;
         }
       )
-      .addCase(getAllCompanyInfo.rejected, (state, action) => {
+      .addCase(getAllClientTestimonial.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      .addCase(getCompanyInfo.pending, (state) => {
+      .addCase(getClientTestimonial.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
-        getCompanyInfo.fulfilled,
+        getClientTestimonial.fulfilled,
         (state, action: PayloadAction<Data>) => {
           state.loading = false;
           state.data = action.payload;
         }
       )
-      .addCase(getCompanyInfo.rejected, (state, action) => {
+      .addCase(getClientTestimonial.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export default companyInfoSlice.reducer;
+export default clientTestimonialSlice.reducer;

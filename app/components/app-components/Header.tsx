@@ -12,15 +12,15 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import * as Icons from "@heroicons/react/24/outline";
-import * as Icons2 from "react-icons/pi";
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
 import { getAllReportCategory } from "~/redux/features/reportSlice";
-import { getAllProductCategory } from "~/redux/features/productSlice";
 import { SkeletonCategoryItem } from "./category-skeleton";
+import { FaShirt } from "react-icons/fa6";
+import { PiPantsFill } from "react-icons/pi";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,10 +29,25 @@ export default function Header() {
   const [hasBounced, setHasBounced] = useState(false);
   const dispatch = useAppDispatch();
   const { loading, categoryData } = useAppSelector((state) => state.report);
-  const { loading: pLoading, categoryData: pCategory } = useAppSelector(
-    (state) => state.product
-  );
+
   const token = "";
+
+  const productCategory = [
+    {
+      id: 1,
+      name: "Upper Outwear",
+      description: "Get a better upper body outfit",
+      link: "/upper-outwears",
+      icon: FaShirt,
+    },
+    {
+      id: 2,
+      name: "Lower Outwear",
+      description: "Get a better upper body outfit",
+      link: "/lower-outwears",
+      icon: PiPantsFill,
+    },
+  ];
 
   const getIcon = (name: string): React.ElementType => {
     return (
@@ -40,15 +55,9 @@ export default function Header() {
       Icons.QuestionMarkCircleIcon
     );
   };
-  const getIcon2 = (name: string): React.ElementType => {
-    return (
-      (Icons2 as Record<string, React.ElementType>)[name] || Icons2.PiQuestion
-    );
-  };
 
   useEffect(() => {
     dispatch(getAllReportCategory({ token }));
-    dispatch(getAllProductCategory({ token }));
   }, []);
 
   useEffect(() => {
@@ -170,18 +179,17 @@ export default function Header() {
               className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4 max-h-[12.5rem] overflow-auto">
-                {pLoading || !pCategory?.result ? (
+                {!productCategory ? (
                   <SkeletonCategoryItem />
                 ) : (
-                  pCategory?.result?.map((item) => {
-                    const Icon = getIcon2(item.icon);
+                  productCategory?.map((item) => {
                     return (
                       <div
                         key={item.name}
                         className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-white/40"
                       >
                         <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-700 group-hover:shadow-2xl">
-                          <Icon
+                          <item.icon
                             aria-hidden="true"
                             className="size-6 text-gray-400 group-hover:text-white"
                           />
@@ -284,7 +292,7 @@ export default function Header() {
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {pCategory?.result?.map((item) => (
+                    {productCategory?.map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"

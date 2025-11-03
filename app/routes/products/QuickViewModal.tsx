@@ -4,68 +4,11 @@ import {
   DialogPanel,
   Transition,
 } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
-const products = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    category: "outerwear",
-  },
-  {
-    id: 2,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
-    imageAlt: "Front of men's Basic Tee in white.",
-    category: "outerwear",
-  },
-  {
-    id: 3,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
-    imageAlt: "Front of men's Basic Tee in dark gray.",
-    category: "workwear",
-  },
-  {
-    id: 4,
-    name: "Artwork Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
-    imageAlt:
-      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
-    category: "outerwear",
-  },
-  {
-    id: 5,
-    name: "Artwork Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
-    imageAlt:
-      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
-    category: "fashionwear",
-  },
-  {
-    id: 6,
-    name: "Artwork Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
-    imageAlt:
-      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
-    category: "fashionwear",
-  },
-];
+import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
+import { getAllProduct } from "~/redux/features/productSlice";
+import { Spinner } from "~/components/ui/spinner";
 
 const QuickViewModal = ({
   pId,
@@ -76,7 +19,13 @@ const QuickViewModal = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  const product = products.find((prod) => prod.id === pId);
+  const dispatch = useAppDispatch();
+  const { loading, productData } = useAppSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getAllProduct({ token: "" }));
+  }, []);
+  const product = productData?.result?.find((prod) => prod.id === pId);
   if (!product) return null;
 
   return (
@@ -114,8 +63,8 @@ const QuickViewModal = ({
                 <XMarkIcon className="w-6 h-6" />
               </button>
               <img
-                src={product.imageSrc}
-                alt={product.imageAlt}
+                src={product.imageUrl}
+                alt={product.name}
                 className="w-full rounded-md object-cover"
               />
             </DialogPanel>
@@ -140,8 +89,8 @@ const QuickViewModal = ({
               </button>
               <div className="flex-shrink-0 w-full">
                 <img
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
+                  src={product.imageUrl}
+                  alt={product.name}
                   className="w-full h-full object-contain rounded-md"
                 />
               </div>

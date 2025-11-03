@@ -2,20 +2,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { getCompanyInfo } from "~/redux/features/companyInfoSlice";
-import { getProfileImages } from "~/redux/features/ProfileImageSlice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks/hook";
 import { Spinner } from "../ui/spinner";
 import TeamSummary from "./TeamSummary";
 import ClientSlider from "./ClientSlider";
 import ImageGallery from "./image-gallery";
-
-interface Testimonial {
-  id: number;
-  name: string;
-  company: string;
-  text: string;
-  avatar: string;
-}
+import ClientTestimonialSlider from "./client-testimonial";
 
 interface ProductCategory {
   id: number;
@@ -29,21 +21,13 @@ const AboutUs = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dispatch = useAppDispatch();
-  const { loading, data, refresh } = useAppSelector(
-    (state) => state.companyInfo
-  );
-  const {
-    loading: pro_loading,
-    data: pro_data,
-    refresh: pro_refresh,
-  } = useAppSelector((state) => state.profile_images);
+  const { loading, data } = useAppSelector((state) => state.companyInfo);
+
   const token = "";
   const id = 1;
-  const ProId = 1;
 
   useEffect(() => {
     dispatch(getCompanyInfo({ token, id }));
-    dispatch(getProfileImages({ token, id: ProId }));
   }, []);
 
   const formatNumber = (number: number | 0) => {
@@ -62,54 +46,38 @@ const AboutUs = () => {
       id: 1,
       name: "Annual Turnover",
       value: `USD ${formatNumber(data?.result?.annualTurnover ?? 0)} Million`,
+      color: "text-cyan-600",
     },
     {
       id: 2,
       name: "Production Capacity",
       value: `${formatNumber(data?.result?.productionCapacity ?? 0)} Pcs/Per Month`,
+      color: "text-orange-600",
     },
     {
       id: 3,
-      name: "State of art production facilities",
-      value: "1 Sewing Plants",
+      name: "Number Of Sewing Plants",
+      value: `${data?.result?.numberOfSewingPlants}`,
+      color: "text-green-600",
     },
     {
       id: 4,
-      name: "Number of Employees",
-      value: `${formatNumber(data?.result?.numberOfEmployees ?? 0)} (Current)`,
+      name: "Number Of Sewing Lines",
+      value: `${data?.result?.numberOfSewingLines}`,
+      color: "text-purple-600",
     },
     {
       id: 5,
+      name: "Number of Employees",
+      value: `${formatNumber(data?.result?.numberOfEmployees ?? 0)} (Current)`,
+      color: "text-black",
+    },
+
+    {
+      id: 6,
       name: "Primary Markets",
       value: `${data?.result?.primaryMarkets}`,
-    },
-  ];
-
-  // Testimonials from fashion industry clients
-  const testimonials: Testimonial[] = [
-    {
-      id: 1,
-      name: "Elena Rodriguez",
-      company: "Killtech",
-      text: "DK Global delivers exceptional quality and timely delivery. Their attention to detail is remarkable!",
-      avatar:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      name: "James Wilson",
-      company: "Kapriol",
-      text: "The consistency in quality and their innovative designs have helped us grow our brand significantly.",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-    },
-    {
-      id: 3,
-      name: "Sarah Kim",
-      company: "Pinewood",
-      text: "Their sustainable manufacturing practices align perfectly with our brand values. Highly recommended!",
-      avatar:
-        "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face",
+      color: "text-pink-600",
     },
   ];
 
@@ -326,7 +294,9 @@ const AboutUs = () => {
                     key={index}
                     className="text-center p-4 bg-gray-50 rounded-lg transform hover:scale-105 transition-all duration-300"
                   >
-                    <div className={`text-2xl font-bold mb-2`}>
+                    <div
+                      className={`text-lg ${stat.color} font-bold mb-2 break-words whitespace-pre-wrap leading-snug sm:text-2xl`}
+                    >
                       {stat.value}
                     </div>
                     <div className="text-gray-600 font-medium">{stat.name}</div>
@@ -487,55 +457,8 @@ const AboutUs = () => {
       <section ref={addToRefs}>
         <ClientSlider />
       </section>
-      <section
-        ref={addToRefs}
-        className="py-20 px-4 bg-gradient-to-br from-pink-50 to-purple-100"
-      >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
-            Client <span className="text-pink-600">Testimonials</span>
-          </h2>
-          <p className="text-xl text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Trusted by fashion brands worldwide
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="bg-white rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-500"
-              >
-                <div className="flex items-center mb-4">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full mr-4"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-gray-800">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-pink-600 text-sm">
-                      {testimonial.company}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 italic">"{testimonial.text}"</p>
-                <div className="flex text-yellow-400 mt-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className="w-5 h-5 fill-current"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section ref={addToRefs}>
+        <ClientTestimonialSlider />
       </section>
 
       {/* CTA Section */}
