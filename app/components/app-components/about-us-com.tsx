@@ -8,6 +8,15 @@ import TeamSummary from "./TeamSummary";
 import ClientSlider from "./ClientSlider";
 import ImageGallery from "./image-gallery";
 import ClientTestimonialSlider from "./client-testimonial";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 interface ProductCategory {
   id: number;
@@ -206,12 +215,29 @@ const AboutUs = () => {
             >
               Request Catalog
             </Link>
-            <Link
-              to="/product-category"
-              className="max-sm:mt-2 inline-block border-2 border-white hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 rounded-full transform hover:scale-105 transition-all duration-300"
-            >
-              View Collections
-            </Link>
+            <div className="inline-flex items-center justify-center ">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className="text-black font-semibold px-8 py-7 rounded-full hover:bg-white/80"
+                  >
+                    View Collections
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuGroup>
+                    <Link to={"/upper-outwears"}>
+                      <DropdownMenuItem>Upper Wear</DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator />
+                    <Link to={"/lower-outwears"}>
+                      <DropdownMenuItem>Lower Wear</DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
 
