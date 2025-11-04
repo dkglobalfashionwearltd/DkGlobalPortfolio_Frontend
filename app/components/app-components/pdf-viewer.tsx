@@ -483,7 +483,7 @@ export default function PdfFlipBookReal({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className={`${error ? "hidden" : ""} mt-8 p-6 bg-white rounded-xl shadow-lg border border-gray-200 text-center`}
+        className={` mt-8 p-6 bg-white rounded-xl shadow-lg border border-gray-200 text-center`}
       >
         <h3 className="text-lg font-semibold text-gray-800 mb-2">
           Download Full Report
