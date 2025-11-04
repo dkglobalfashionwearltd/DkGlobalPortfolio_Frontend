@@ -14,8 +14,8 @@ const CertificateSummary = () => {
     dispatch(getAllCertificate({ token }));
   }, []);
 
-  const filterImages = data?.result?.filter((item) =>
-    item?.title?.toLowerCase().includes("certificate")
+  const filterImages = data?.result?.filter(
+    (item) => item?.searchText?.toLowerCase() === "certificate"
   );
 
   // Show loading skeletons when data is being fetched

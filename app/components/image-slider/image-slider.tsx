@@ -21,8 +21,8 @@ const ImageSlider = () => {
   useEffect(() => {
     dispatch(getAllProfileImages({ token }));
   }, [refresh]);
-  const filterImages = dataList?.result?.filter((item) =>
-    item?.title?.toLowerCase().includes("slider")
+  const filterImages = dataList?.result?.filter(
+    (item) => item?.searchText?.toLowerCase() === "slider"
   );
 
   // console.log(filterImages);

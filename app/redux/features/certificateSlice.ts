@@ -10,6 +10,7 @@ import { apiRequest } from "~/redux/data/GetData";
 export type Certificate = {
   id: number;
   title: string;
+  searchText: string;
   imageUrl: string;
   isActive: string;
 };

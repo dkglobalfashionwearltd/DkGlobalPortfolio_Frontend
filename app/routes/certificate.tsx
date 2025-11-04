@@ -15,8 +15,8 @@ const Certificate = () => {
     dispatch(getAllCertificate({ token }));
   }, []);
 
-  const filterImages = data?.result?.filter((item) =>
-    item?.title?.toLowerCase().includes("certificate")
+  const filterImages = data?.result?.filter(
+    (item) => item?.searchText?.toLowerCase() === "certificate"
   );
 
   return (

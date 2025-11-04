@@ -15,16 +15,31 @@ export type ReportCategory = {
   icon: string;
   isActive: string;
 };
+export type Report = {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  pdfLink: string;
+  isActive: string;
+};
 interface CategoryData {
   statusCode: number;
   success: boolean;
   message: string;
   result: ReportCategory[];
 }
+interface Data {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  result: Report[];
+}
 
 interface StateType {
   loading: boolean;
   categoryData: CategoryData | null;
+  data: Data | null;
   error: string | null;
   refresh: boolean;
   statusChange: boolean;
@@ -32,11 +47,13 @@ interface StateType {
 const initialState: StateType = {
   loading: true,
   categoryData: null,
+  data: null,
   error: null,
   refresh: false,
   statusChange: false,
 };
 
+// report category
 export const getAllReportCategory = createAsyncThunk(
   "report-category/getAllReportCategory",
   async ({ token }: { token: string | null }, { rejectWithValue }) => {
@@ -84,12 +101,47 @@ export const getReportCategory = createAsyncThunk(
   }
 );
 
+// report data
+export const getAllReport = createAsyncThunk(
+  "report/getAllReport",
+  async ({ token }: { token: string | null }, { rejectWithValue }) => {
+    try {
+      const res = await apiRequest(
+        "get",
+        `${baseUrl}/api/reports/getall`,
+        token,
+        "application/json",
+        {},
+        null
+      );
+      return res;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(
+        error?.response?.data?.message || "Failed to get report data"
+      );
+    }
+  }
+);
+
 const reportSlice = createSlice({
   name: "report",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getAllReport.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllReport.fulfilled, (state, action: PayloadAction<Data>) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(getAllReport.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(getAllReportCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
