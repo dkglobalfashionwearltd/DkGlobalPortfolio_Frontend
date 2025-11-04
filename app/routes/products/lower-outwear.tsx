@@ -71,12 +71,12 @@ const LowerOutwear = () => {
           {filteredProducts && filteredProducts?.length > 0 ? (
             filteredProducts?.map((product) => (
               <div key={product.id} className="group relative cursor-pointer">
-                <div className="relative overflow-hidden rounded-lg">
+                <div className="relative overflow-hidden rounded-lg border shadow-md h-[20rem]">
                   {/* Image: clickable on mobile, hover overlay on desktop */}
                   <img
                     alt={product.name}
                     src={product.imageUrl}
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="aspect-square w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onClick={() => handleModalBtn(product.id)} // make it clickable on all devices
                   />
 

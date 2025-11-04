@@ -9,6 +9,7 @@ import messageReducer from "../features/messageSlice";
 import newsletterReducer from "../features/newsletterSlice";
 import certificateReducer from "../features/certificateSlice";
 import clientTestimonialReducer from "../features/clientTestimonialSlice";
+import partnerReducer from "../features/partnerSlice";
 export const store = configureStore({
   reducer: {
     leader: leadershipReducer,
@@ -21,6 +22,7 @@ export const store = configureStore({
     newsletter: newsletterReducer,
     certificate: certificateReducer,
     clientTestimonial: clientTestimonialReducer,
+    partner: partnerReducer,
   },
 });
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
