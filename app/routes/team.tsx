@@ -34,7 +34,7 @@ const Team = () => {
                   transition={{ duration: 0.4 }}
                   alt="image"
                   src={person?.imageUrl ?? "image-place.avif"}
-                  className="w-[30rem] h-[15rem] object-cover rounded-xl"
+                  className="w-[30rem] h-[16rem] object-fill rounded-xl"
                 />
               </div>
               <div>
@@ -46,7 +46,7 @@ const Team = () => {
                 </p>
                 <div className="flex gap-5 mt-4">
                   <Link
-                    to={`tel:${person?.phoneNumber}`}
+                    to={`/contact-us`}
                     className="hover:scale-110  hover:text-green-400 transition-all"
                   >
                     <PhoneCall className="size-5 " />

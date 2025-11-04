@@ -57,27 +57,27 @@ const Home = () => {
   const serviceRef = useInView<HTMLElement>({
     threshold: 0.1,
     rootMargin: "0px 0px -10% 0px",
-    once: false,
+    once: true,
   });
   const certificateRef = useInView<HTMLElement>({
     threshold: 0.1,
     rootMargin: "0px 0px -10% 0px",
-    once: false,
+    once: true,
   });
   const blogRef = useInView<HTMLElement>({
     threshold: 0.1,
     rootMargin: "0px 0px -10% 0px",
-    once: false,
+    once: true,
   });
   const teamRef = useInView<HTMLElement>({
     threshold: 0.1,
     rootMargin: "0px 0px -10% 0px",
-    once: false,
+    once: true,
   });
   const clientRef = useInView<HTMLElement>({
     threshold: 0.1,
     rootMargin: "0px 0px -10% 0px",
-    once: false,
+    once: true,
   });
 
   return (

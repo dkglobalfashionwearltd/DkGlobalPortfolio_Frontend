@@ -9,7 +9,7 @@ import { useInView } from "../hook/useInView";
 
 export default function TeamSummary() {
   const dispatch = useAppDispatch();
-  const { loading, data, refresh } = useAppSelector((state) => state.leader);
+  const { loading, data } = useAppSelector((state) => state.leader);
 
   useEffect(() => {
     dispatch(getAllLeadership({ token: "" }));
@@ -50,13 +50,13 @@ export default function TeamSummary() {
             data?.result?.slice(0, 2)?.map((person) => (
               <li key={person.id}>
                 <div className="flex flex-col items-start gap-5 max-sm:mb-5">
-                  <div className="w-full relative overflow-hidden rounded-xl border border-gray-200">
+                  <div className="relative overflow-hidden rounded-xl border border-gray-200">
                     <motion.img
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.4 }}
                       alt="image"
                       src={person?.imageUrl ?? "image-place.avif"}
-                      className="w-full h-[15rem] object-cover rounded-xl"
+                      className="w-[28rem] h-[16rem] object-fill rounded-xl"
                     />
                   </div>
                   <div>
@@ -68,7 +68,7 @@ export default function TeamSummary() {
                     </p>
                     <div className="flex gap-5 mt-4">
                       <Link
-                        to={`tel:${person?.phoneNumber}`}
+                        to={`/contact-us`}
                         className="hover:scale-110  hover:text-green-400 transition-all"
                       >
                         <PhoneCall className="size-5 " />
