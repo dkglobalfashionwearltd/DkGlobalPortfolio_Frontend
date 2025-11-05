@@ -1,5 +1,6 @@
 // TermsOfService.tsx
 import React, { useState } from "react";
+import { Link } from "react-router";
 
 interface TermSection {
   id: string;
@@ -15,162 +16,81 @@ const TermsOfService: React.FC = () => {
     {
       id: "agreement",
       title: "Agreement to Terms",
-      content: `By accessing and using the website and services of DK Global Fashion Wear Ltd. ("we," "us," "our"), you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
-
-These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/or contributors of content.`,
+      content: `Welcome to the online portfolio of DK Global Fashion Wear Ltd. ("Company," "we," "us," or "our"). These Terms of Service ("Terms") govern your access to and use of our website dkglobalfashion.com (the "Site").
+      By accessing, browsing, or using the Site, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use the Site.`,
     },
     {
       id: "services",
       title: "Description of Services",
-      content: `DK Global Fashion Wear Ltd. operates an e-commerce platform that allows users to purchase fashion and apparel products through our website and mobile applications. Our services include:
-
-• Online retail of fashion clothing and accessories
-• Order processing and fulfillment
-• Customer support and services
-• Account management and personalization
-• Marketing communications (with user consent)
+      content: `This Site is a portfolio and informational website. Its primary purpose is to showcase the designs, brand, and creative work of DK Global Fashion Wear Ltd.
+      Please note: This is not an e-commerce website. You cannot purchase products directly through this Site. Any inquiries regarding potential business collaborations, wholesale, or press should be directed through the provided contact information.
 
 We reserve the right to modify, suspend, or discontinue any aspect of our services at any time without prior notice.`,
     },
-    {
-      id: "accounts",
-      title: "User Accounts",
-      content: `To access certain features of our services, you may be required to create a user account. You agree to:
 
-• Provide accurate, current, and complete information during registration
-• Maintain and promptly update your account information
-• Maintain the security of your password and accept all risks of unauthorized access
-• Notify us immediately of any breach of security or unauthorized use of your account
-• Be responsible for all activities that occur under your account
-
-You must be at least 16 years old to create an account. We reserve the right to suspend or terminate accounts that provide false information or violate these terms.`,
-    },
-    {
-      id: "orders",
-      title: "Ordering and Purchases",
-      content: `When you place an order through our website, you agree that:
-
-• All information you provide is accurate and complete
-• You have the legal right to use the payment method provided
-• You authorize us to charge your payment method for the total order amount
-• We may verify your identity and payment information before processing orders
-
-All orders are subject to product availability and our acceptance. We reserve the right to refuse or cancel any order for any reason, including but not limited to:
-• Product unavailability
-• Errors in product or pricing information
-• Suspicious or fraudulent activity
-• Violation of these terms`,
-    },
-    {
-      id: "pricing",
-      title: "Pricing and Payment",
-      content: `All prices are displayed in the currency indicated on the website and are exclusive of applicable taxes and shipping fees unless otherwise stated.
-
-We strive to ensure accurate pricing but may correct any errors in pricing or product information. If we discover an error after your order is placed, we will notify you and provide options to proceed at the correct price or cancel the order.
-
-Accepted payment methods include major credit cards, debit cards, and other payment options as indicated during checkout. You agree to pay all charges incurred by your account.`,
-    },
-    {
-      id: "shipping",
-      title: "Shipping and Delivery",
-      content: `Shipping times and costs vary depending on your location and the shipping method selected. Estimated delivery times are provided for guidance only and are not guaranteed.
-
-Risk of loss and title for products pass to you upon delivery to the shipping carrier. We are not responsible for delays caused by customs, weather, carrier delays, or other circumstances beyond our control.
-
-You are responsible for providing accurate shipping information. We are not liable for orders shipped to incorrect addresses provided by the customer.`,
-    },
-    {
-      id: "returns",
-      title: "Returns and Refunds",
-      content: `We accept returns of unworn, unwashed merchandise with original tags attached within 30 days of delivery. Return shipping costs are the responsibility of the customer unless the return is due to our error.
-
-Refunds will be processed to the original payment method within 7-10 business days after we receive and inspect the returned items. Sale items and customized products may not be eligible for return unless defective.
-
-To initiate a return, please contact our customer service team with your order number and reason for return.`,
-    },
     {
       id: "intellectual-property",
-      title: "Intellectual Property",
-      content: `All content on this website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and software, is the property of DK Global Fashion Wear Ltd. or our content suppliers and is protected by international copyright laws.
+      title: "Intellectual Property Rights",
+      content: `All content on this Site, including but not limited to text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, software, and the compilation of all content on the Site, is the exclusive property of DK Global Fashion Wear Ltd., its affiliates, or its content suppliers and is protected by international copyright, trademark, and other intellectual property laws.
 
-The DK Global Fashion Wear Ltd. name and logo are registered trademarks. You may not use our trademarks without our prior written permission.
+The "DK Global Fashion Wear Ltd." name and logo, and all related product and service names, design marks, and slogans are the trademarks or service marks of the Company. You are not authorized to use any such marks without our prior written permission.
 
-You are granted a limited license to access and make personal use of this site. This license does not include:
-• Any resale or commercial use of the site or its contents
-• Collection and use of any product listings or descriptions
-• Any derivative use of this site or its contents
-• Any use of data mining, robots, or similar data gathering tools`,
+You may view, download, and print content from the Site for your personal, non-commercial use only. You may not:
+• Modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer, or sell any information, software, products, or services obtained from the Site.
+• Use any meta tags or any other "hidden text" utilizing our name or trademarks without our express written consent.
+`,
     },
-    {
-      id: "user-content",
-      title: "User-Generated Content",
-      content: `By submitting content (including reviews, comments, photos, and other materials) to our website, you grant us a non-exclusive, royalty-free, perpetual, and worldwide license to use, modify, display, and distribute such content in any media.
 
-You represent and warrant that:
-• You own or have the necessary rights to the content you submit
-• The content is accurate and not misleading
-• The content does not violate any third-party rights or applicable laws
-• The content is not defamatory, obscene, or otherwise objectionable
-
-We reserve the right to monitor, edit, or remove any user-generated content at our discretion.`,
-    },
     {
       id: "prohibited",
       title: "Prohibited Activities",
       content: `You agree not to engage in any of the following prohibited activities:
 
-• Violating any applicable laws or regulations
-• Infringing upon our intellectual property rights or the rights of others
-• Using the site for any fraudulent or unlawful purpose
-• Introducing viruses, worms, or other malicious code
-• Attempting to gain unauthorized access to our systems
-• Interfering with the proper functioning of the site
-• Using automated systems to access the site without permission
-• Harassing, abusing, or harming other users
-• Collecting personal information about other users
-
-Violation of these prohibitions may result in termination of your account and legal action.`,
+• Using the Site in any way that violates any applicable local, national, or international law or regulation.
+• Engaging in any conduct that restricts or inhibits anyone's use or enjoyment of the Site.
+• Introducing any viruses, trojan horses, worms, logic bombs, or other material that is malicious or technologically harmful.
+• Attempting to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Site, the server on which the Site is stored, or any server, computer, or database connected to the Site.
+`,
     },
     {
-      id: "termination",
-      title: "Termination",
-      content: `We may terminate or suspend your account and access to our services immediately, without prior notice or liability, for any reason, including but not limited to:
+      id: "user-generated",
+      title: "User-Generated Content",
+      content: `
+The Site may include features that allow you to submit content, such as through contact forms or comment sections ("User Content"). By submitting User Content, you grant us a non-exclusive, worldwide, royalty-free, perpetual, irrevocable, and sub-licensable right to use, reproduce, modify, adapt, publish, translate, and distribute it in any media.
 
-• Breach of these Terms of Service
-• Fraudulent or illegal activity
-• Non-payment of fees
-• Requests by law enforcement
+You represent and warrant that you own or control all rights to the User Content you submit and that the User Content is accurate, does not violate these Terms, and will not cause injury to any person or entity.
 
-Upon termination, your right to use our services will immediately cease. All provisions of these terms that by their nature should survive termination shall survive, including ownership provisions, warranty disclaimers, and limitations of liability.`,
+We have the right, but not the obligation, to monitor and remove any User Content at our sole discretion.`,
     },
+
     {
       id: "disclaimer",
       title: "Disclaimer of Warranties",
-      content: `THE SERVICES AND PRODUCTS ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE BY LAW, DK GLOBAL FASHION WEAR LTD. DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-
-WE DO NOT WARRANT THAT THE SERVICES WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE, THAT DEFECTS WILL BE CORRECTED, OR THAT THE SERVICES ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.`,
+      content: `
+The Site and all content are provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied. DK Global Fashion Wear Ltd. disclaims all warranties, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, and non-infringement.`,
     },
     {
       id: "limitation",
       title: "Limitation of Liability",
-      content: `TO THE FULLEST EXTENT PERMITTED BY LAW, DK GLOBAL FASHION WEAR LTD. SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:
+      content: `To the fullest extent permitted by law, DK Global Fashion Wear Ltd. shall not be liable for any damages of any kind arising from the use of this Site, including, but not limited to, direct, indirect, incidental, punitive, and consequential damages. This includes, without limitation, damages for loss of profits, goodwill, data, or other intangible losses resulting from:
 
-• YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE SERVICES
-• ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE SERVICES
-• ANY CONTENT OBTAINED FROM THE SERVICES
-• UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR TRANSMISSIONS OR CONTENT
-
-OUR TOTAL LIABILITY TO YOU FOR ALL CLAIMS ARISING FROM OR RELATED TO THESE TERMS OR YOUR USE OF THE SERVICES SHALL NOT EXCEED THE AMOUNT YOU HAVE PAID TO US IN THE LAST SIX MONTHS.`,
+• Your access to or use of, or inability to access or use, the Site.
+• Any conduct or content of any third party on the Site.
+• Any content obtained from the Site.
+• Unauthorized access, use, or alteration of your transmissions or content.
+`,
     },
     {
       id: "indemnification",
       title: "Indemnification",
-      content: `You agree to defend, indemnify, and hold harmless DK Global Fashion Wear Ltd., its officers, directors, employees, and agents from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms of Service or your use of the services, including but not limited to:
-
-• Your use of the services in violation of these terms
-• Your violation of any law or the rights of a third party
-• Any content you submit or transmit through the services
-• Your interaction with any other user of the services`,
+      content: `You agree to defend, indemnify, and hold harmless DK Global Fashion Wear Ltd., its officers, directors, employees, and agents from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the Site.
+`,
+    },
+    {
+      id: "termination",
+      title: "Termination",
+      content: `We may terminate or suspend your access to the Site immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.
+`,
     },
     {
       id: "governing-law",
@@ -193,16 +113,16 @@ By continuing to access or use our services after any revisions become effective
 
 DK Global Fashion Wear Ltd.
 Legal Department
-123 Fashion District, Dhaka 1212
+House 52, Road 01, Sector 3, Uttara, Dhaka 1230
 Bangladesh
-Email: legal@dkgfashion.com
+Email: info@dkglobalfashion.com
 Phone: +880 2 XXXX-XXXX
 
 We will respond to your inquiry within a reasonable timeframe.`,
     },
   ];
 
-  const lastUpdated = "January 1, 2024";
+  const lastUpdated = "November 1, 2025";
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -413,7 +333,10 @@ We will respond to your inquiry within a reasonable timeframe.`,
                   </svg>
                   Download Terms
                 </button>
-                <button className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                <Link
+                  to={"/contact-us"}
+                  className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
                   <svg
                     className="w-5 h-5 mr-2 text-gray-600"
                     fill="none"
@@ -428,7 +351,7 @@ We will respond to your inquiry within a reasonable timeframe.`,
                     />
                   </svg>
                   Contact Legal Team
-                </button>
+                </Link>
               </div>
             </div>
           </div>

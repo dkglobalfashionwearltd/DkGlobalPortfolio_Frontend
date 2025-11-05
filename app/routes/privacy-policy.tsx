@@ -14,63 +14,75 @@ const PrivacyPolicy: React.FC = () => {
     {
       id: "introduction",
       title: "Introduction",
-      content: `DK Global Fashion Wear Ltd. ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or make purchases from us. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.`,
+      content: `Welcome to DK Global Fashion Wear Ltd. We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our portfolio website, dkglobalfashion.com (the "Site").
+
+Please read this policy carefully. By accessing and using our Site, you consent to the practices described in this policy. If you do not agree with the terms of this policy, please do not access the Site.`,
     },
     {
       id: "information-collection",
       title: "Information We Collect",
-      content: `We collect information that you provide directly to us, including:
-• Personal Identification Information: Name, email address, phone number, shipping address
-• Payment Information: Credit card details, billing address (processed securely through our payment processors)
-• Account Information: Username, password, profile preferences
-• Communications: Records of your correspondence with us
-• Technical Data: IP address, browser type, device information, and usage data
+      content: `We may collect information about you in a few ways:
+      A. Information You Voluntarily Provide to Us:
+• Contact Forms: When you use our contact form to get in touch for business inquiries, collaborations, or press, we may collect your name, email address, phone number, company name, and the content of your message.
+• Newsletter Sign-ups: If we offer a newsletter, we will collect your email address to send it to you.
+• Correspondence: If you contact us via email, we will retain the content of your message and our response.
+B. Information Collected Automatically:
+• Technical Data: Like most websites, we automatically collect information sent by your browser. This may include your IP address, browser type and version, time zone setting, browser plug-in types, operating system and platform, and other technology on the devices you use to access this Site.
+• Usage Data: We collect information about how you use our Site, such as the pages you view, the links you click, the time and duration of your visits, and the referring website address.
 
-We also automatically collect certain information when you visit our website, including through cookies and similar technologies.`,
+This automatic collection is typically done using cookies and similar tracking technologies.`,
     },
     {
       id: "how-we-use",
       title: "How We Use Your Information",
-      content: `We use the information we collect in the following ways:
-• To process and fulfill your orders and transactions
-• To provide, maintain, and improve our services
-• To communicate with you about products, services, offers, and promotions
-• To personalize your experience and deliver content and product offerings relevant to your interests
-• To protect against, identify, and prevent fraud and other unlawful activities
-• To comply with legal obligations and enforce our terms and conditions
-• To send administrative information, such as updates to our policies`,
+      content: `We use the information we collect for the following purposes:
+• To Respond to Your Inquiries: To answer the questions and requests you send us via our contact forms or email.
+• To Improve Our Site: To analyze how visitors use our Site so we can enhance its functionality, content, and user experience.
+• For Business Communications: To communicate with you about potential business opportunities, collaborations, or other professional purposes you have initiated.
+• For Marketing (with consent): If you have opted-in to receive our newsletter, to send you updates about our latest collections, news, and events. You can opt-out at any time.
+• For Security: To monitor and protect the security of our Site and our business.
+`,
+    },
+    {
+      id: "legal-basis",
+      title: "Legal Basis for Processing (For Bangladesh Context)",
+      content: `We process your personal information based on the following legal grounds:
+• Your Consent: For specific purposes like sending marketing newsletters, where we will ask for your explicit consent.
+• Legitimate Interests: To operate our business and provide you with the services you request, such as responding to your inquiries and improving our Site, provided such interests are not overridden by your data protection rights.
+• Legal Obligation: To comply with applicable laws and regulations in Bangladesh.
+
+`,
     },
     {
       id: "data-sharing",
       title: "Data Sharing and Disclosure",
-      content: `We may share your information in the following circumstances:
-• With Service Providers: We share information with third-party vendors who perform services on our behalf, such as payment processing, shipping, data analysis, email delivery, and hosting services.
-• For Business Transfers: In connection with any merger, sale of company assets, or acquisition of all or a portion of our business.
-• For Legal Reasons: To comply with applicable laws, regulations, legal processes, or governmental requests.
-• With Your Consent: We may share your information with your consent or at your direction.
+      content: `We value your trust and do not sell, trade, or rent your personal information to third parties. We may share your information only in the following situations:
+• Service Providers: With trusted third-party service providers who assist us in operating our website, conducting our business, or serving you (e.g., website hosting, analytics providers), provided they agree to keep this information confidential.
+• Legal Requirements: If required to do so by law or in response to valid requests by public authorities (e.g., a court or a government agency in Bangladesh).
+• Business Transfers: In connection with a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred.
 
 We do not sell your personal information to third parties.`,
     },
     {
+      id: "data-retention",
+      title: "Data Retention",
+      content: `We will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy, or as required to comply with our legal obligations, resolve disputes, and enforce our agreements.`,
+    },
+    {
       id: "data-security",
       title: "Data Security",
-      content: `We implement appropriate technical and organizational security measures designed to protect your personal information. These measures include:
-• Encryption of sensitive data during transmission and storage
-• Regular security assessments and vulnerability testing
-• Access controls and authentication procedures
-• Secure server infrastructure and network protection
-
-While we have implemented reasonable safeguards, no security system is impenetrable, and we cannot guarantee the security of our systems 100%.`,
+      content: `We implement appropriate technical and organizational security measures designed to protect your personal information from accidental loss, unauthorized access, use, alteration, and disclosure. However, please note that no method of transmission over the Internet or electronic storage is 100% secure.`,
     },
     {
       id: "your-rights",
       title: "Your Rights and Choices",
-      content: `Depending on your location, you may have the following rights regarding your personal information:
-• Access: You can request access to the personal information we hold about you.
-• Correction: You can request correction of inaccurate or incomplete information.
-• Deletion: You can request deletion of your personal information under certain circumstances.
+      content: `Under the principles of data protection in Bangladesh and international best practices, you have the following rights regarding your personal data:
+• Right to Access: You can request a copy of the personal information we hold about you.
+• Right to Correction: You can request that we correct any inaccurate or incomplete information we hold about you.
+• Right to Withdraw Consent: Where we rely on your consent to process your data, you have the right to withdraw that consent at any time.
 • Restriction: You can request restriction of processing of your personal information.
 • Portability: You can request transfer of your data to another organization.
+• Right to Erasure: You can request that we delete your personal information, subject to certain legal limitations.
 • Objection: You can object to processing of your personal information.
 
 To exercise these rights, please contact us using the information provided in the "Contact Us" section.`,
@@ -78,40 +90,15 @@ To exercise these rights, please contact us using the information provided in th
     {
       id: "cookies",
       title: "Cookies and Tracking Technologies",
-      content: `We use cookies and similar tracking technologies to collect information about your browsing behavior. These technologies help us:
-• Remember your preferences and settings
-• Understand how you use our website
-• Deliver personalized content and advertisements
-• Analyze and improve our services
-
-You can control cookies through your browser settings. However, disabling cookies may limit your ability to use certain features of our website.`,
+      content: `Our Site uses "cookies" to enhance your experience. A cookie is a small file placed on your device. You can choose to set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this Site may become inaccessible or not function properly.`,
     },
-    {
-      id: "data-retention",
-      title: "Data Retention",
-      content: `We retain your personal information only for as long as necessary to fulfill the purposes for which we collected it, including to satisfy any legal, accounting, or reporting requirements. Our retention periods are based on:
-• The amount, nature, and sensitivity of the personal data
-• The potential risk of harm from unauthorized use or disclosure
-• The purposes for which we process the data
-• Applicable legal requirements
 
-Typically, we retain customer data for 7 years after the end of our business relationship.`,
-    },
     {
       id: "international-transfer",
       title: "International Data Transfers",
-      content: `As a global fashion company, we may transfer your personal information to countries other than your country of residence. These countries may have data protection laws that are different from the laws of your country. When we transfer your information internationally, we ensure appropriate safeguards are in place, including:
-• Standard contractual clauses approved by relevant authorities
-• Adequacy decisions from relevant data protection authorities
-• Binding corporate rules for intra-group transfers
+      content: `Your information, including personal data, may be transferred to —and maintained on— computers located outside of Bangladesh where the data protection laws may differ. By using our Site, you consent to such transfer. We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy.`,
+    },
 
-We take all reasonable steps to ensure your data is treated securely and in accordance with this Privacy Policy.`,
-    },
-    {
-      id: "children-privacy",
-      title: "Children's Privacy",
-      content: `Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that a child under 16 has provided us with personal information, we will take steps to delete such information. If you become aware that a child has provided us with personal information, please contact us immediately.`,
-    },
     {
       id: "policy-changes",
       title: "Changes to This Policy",
@@ -124,16 +111,16 @@ We take all reasonable steps to ensure your data is treated securely and in acco
 
 DK Global Fashion Wear Ltd.
 Data Protection Officer
-123 Fashion District, Dhaka 1212
+123 Fashion District, Dhaka 1230
 Bangladesh
-Email: privacy@dkgfashion.com
+Email: info@dkgfashion.com
 Phone: +880 2 XXXX-XXXX
 
-We will respond to your inquiry within 30 days.`,
+We will respond to your inquiry within a reasonable timeframe.`,
     },
   ];
 
-  const lastUpdated = "January 1, 2024";
+  const lastUpdated = "November 1, 2025";
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
