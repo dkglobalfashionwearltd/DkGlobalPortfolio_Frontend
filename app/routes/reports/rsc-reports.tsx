@@ -64,8 +64,6 @@ const RSCReports = () => {
         return { Icon: getMdIcon(icon), color: "text-yellow-500" };
       case "GrUserWorker":
         return { Icon: getGrIcon(icon), color: "text-green-500" };
-      case "GrUserWorker":
-        return { Icon: getGrIcon(icon), color: "text-blue-500" };
       case "GiProgression":
         return { Icon: getGiIcon(icon), color: "text-orange-500" };
       default:
