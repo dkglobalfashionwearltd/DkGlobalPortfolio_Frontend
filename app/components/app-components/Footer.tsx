@@ -32,8 +32,8 @@ const Footer = () => {
               <Link to={"/workwears"}>
                 <li className="hover:underline">Workwear</li>
               </Link>
-              <Link to={"/fashionwears"}>
-                <li className="hover:underline">Fashionwear</li>
+              <Link to={"/denims"}>
+                <li className="hover:underline">Denim</li>
               </Link>
             </ul>
           </div>
